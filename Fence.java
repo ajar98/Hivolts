@@ -1,8 +1,7 @@
-
 public class Fence extends Actor {
 	
-	public Fence(Location loc) {
-		super(loc);
+	public Fence(Location loc, Grid gr) {
+		super(loc, gr);
 	}
 	
 	// Location[] possiblePlaces
