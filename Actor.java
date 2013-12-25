@@ -1,3 +1,4 @@
+
 public class Actor {
 	
 	private final Location actorLoc;
@@ -8,10 +9,20 @@ public class Actor {
 	public Actor(Location loc, Grid gr) { 
 		actorLoc = loc;
 		g = gr;
+		gr.putActor(loc);
 	}
 	
 	public void setCol(int col) {
 		actorCol = col;
+	}
+	
+	public boolean checkIfDead() {
+		boolean death;
+		if (g.isValid(actorLoc))
+			death = true;
+		else
+			death = false;
+		return death;
 	}
 	
 	public void setRow(int row) {
@@ -34,6 +45,6 @@ public class Actor {
 	}
 	
 	// public void setActorBool(Location loc)
-    	// public void eraseActor(Location loc)
+    // public void eraseActor(Location loc)
 	
 }
