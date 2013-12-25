@@ -17,7 +17,9 @@ public class Hivolts extends JApplet {
 	boolean[][] actors = new boolean[COLS][ROWS];
 	boolean finished = false;
 	
-	public Hivolts() { 
+	public Hivolts() { }
+	
+	public void initActorArray() {
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 12; j++) {
 				actors[i][j] = false;
@@ -30,6 +32,7 @@ public class Hivolts extends JApplet {
 	
 	public void init() {
 		setSize(600, 660);
+		initActorArray();
 		// Buttons HERE
 	}
 	
