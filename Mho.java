@@ -1,8 +1,7 @@
-
 public class Mho extends Actor {
 
-	public Mho(Location loc) {
-		super(loc);
+	public Mho(Location loc, Grid gr) {
+		super(loc, gr);
 	}
 	
 	// Location[] places
