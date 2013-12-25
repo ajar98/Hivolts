@@ -1,3 +1,5 @@
+package defaultpackage;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -75,14 +77,48 @@ public class Hivolts extends JApplet {
                 }
                 catch (Exception e) 
                 {
-                        JOptionPane.showMessageDialog(null, "You.jpg not working because of " + e);
+                        JOptionPane.showMessageDialog(null, "You.jpg not working because " + e);
                 }
                 
                 g.drawImage(image, pixelLoc(you.getLoc()).getCol() + 1, pixelLoc(you.getLoc()).getRow() + 1, width, height, null);
         }
         
-        // public void drawFence(Fence fence, Graphics g)
-        // public void drawMho(Mho mho, Graphics g)
+        public void drawFence(Fence fence, Graphics g){
+        	int width = getCellDim() -1;
+        	int height = getCellDim() -1;
+        	BufferedImage image = null;
+        	try
+        	{
+        		URL u = new URL(getCodeBase(), "Fence.jpg");
+        		image = ImageIO.read(u);
+        }
+        	catch(Exception e)
+        	{
+        		JOptionPane.showMessageDialog(null, "Fence.jpg not working because " + e);
+        	}
+        	
+        	g.drawImage(image, pixelLoc(fence.getLoc()).getCol() + 1, pixelLoc(fence.getLoc()).getRow() + 1, width, height, null);
+        	
+        }
+        
+        public void drawMho(Mho mho, Graphics g){
+        	int width = getCellDim() -1;
+        	int height = getCellDim() -1;
+        	BufferedImage image = null;
+        	try
+        	{
+        		URL u = new URL(getCodeBase(), "Mho.jpg");
+        		image = ImageIO.read(u);
+        }
+        	catch(Exception e)
+        	{
+        		JOptionPane.showMessageDialog(null, "Mho.jpg not working because " + e);
+        	}
+        	
+        	g.drawImage(image, pixelLoc(mho.getLoc()).getCol() + 1, pixelLoc(mho.getLoc()).getRow() + 1, width, height, null);
+        	
+        }
+        
         
         public int getCellDim() {
                 int dim;
@@ -124,12 +160,12 @@ public class Hivolts extends JApplet {
         
         
         //preccess move, not sure if its right at all or if it works.
-        public void ProccessMove(KeyEvent e){
-                if (your turn){
-                        if (e.getKeyChar() == q) {
-                                You.makemove(up left)
-                        }
-                }
+       // public void ProccessMove(KeyEvent e){
+       //         if (your turn){
+       //                 if (e.getKeyChar() == q) {
+       //                         You.makemove(up left)
+       //                 }
+       //         }
                 
         }
         
@@ -144,4 +180,3 @@ public class Hivolts extends JApplet {
         // private class downLeftButton extends JButton implements ActionListener
         // private class doneButton extends JButton implements ActionListener
         
-}
