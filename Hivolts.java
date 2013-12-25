@@ -121,7 +121,18 @@ public class Hivolts extends JApplet {
                                         + ROWS * (cell_height + 1));
                 }
         }
-
+        
+        
+        //preccess move, not sure if its right at all or if it works.
+        public void ProccessMove(KeyEvent e){
+                if (your turn){
+                        if (e.getKeyChar() == q) {
+                                You.makemove(up left)
+                        }
+                }
+                
+        }
+        
         // private class jumpButton extends JButton implements ActionListener
         // private class rightButton extends JButton implements ActionListener
         // private class leftButton extends JButton implements ActionListener
