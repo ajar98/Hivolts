@@ -1,4 +1,3 @@
-
 public class Actor {
 	
 	private final Location actorLoc;
@@ -27,5 +26,8 @@ public class Actor {
 		setCol(nextLoc.getCol());
 		setRow(nextLoc.getRow());
 	}
+	
+	// public void setActorBool(Location loc)
+    	// public void eraseActor(Location loc)
 	
 }
