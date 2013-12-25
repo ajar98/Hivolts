@@ -1,4 +1,3 @@
-
 public class Grid {
 	
 	boolean[][] actors = new boolean[12][12];
@@ -27,4 +26,9 @@ public class Grid {
 	public void putActor(Location loc) {
 		actors[loc.getCol()][loc.getRow()] = true;
 	}
-}
+	
+	public boolean[][] getActorArray() {
+		return actors;
+	}
+	
+} 
