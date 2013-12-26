@@ -1,11 +1,11 @@
-package defaultpackage;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JApplet;
@@ -21,20 +21,11 @@ public class Hivolts extends JApplet {
         
         public Hivolts() { }
         
-       /*  public void initActorArray() {
-                for (int i = 0; i < 12; i++) {
-                        for (int j = 0; j < 12; j++) {
-                                actors[i][j] = false;
-                        }
-                }
-        } */ // SHOULD BE IN ACTOR.JAVA
-        
         
         
         public void init() {
                 setSize(600, 660);
                 // initActorArray();
-                // Buttons HERE
         }
         
         public void paint(Graphics g) {
@@ -54,6 +45,8 @@ public class Hivolts extends JApplet {
         
         public void playHivolts(int width, int height, Graphics g) {
                 drawGrid(width, height, g);
+                Grid gr = new Grid();
+                placeFences(allAround(), possibleFencePlaces(), gr, g);
                 // placeYou()
                 // placeFences()
                 // placeMhos()
@@ -62,11 +55,52 @@ public class Hivolts extends JApplet {
                 // }
         }
         
-        // public void placeYou()
-        // public void placeFences()
+        public void nullLoc(Location loc, Graphics g) {
+        	g.setColor(Color.white);
+        	g.fillRect(pixelLoc(loc).getCol() + 1, pixelLoc(loc).getRow() + 1, getCellDim() - 1, getCellDim() - 1);
+        }
+        
+        public void placeYou(Grid gr, Location[] locs) {
+        	Random r = new Random();
+        	int randLocIndex = r.nextInt(locs.length);
+        	Location youLoc = locs[randLocIndex];
+        	You you = new You(youLoc, gr);
+        }
+        
+        public void placeFences(ArrayList<Location> allAround, ArrayList<Location> rest, Grid gr, Graphics g) {
+        	for (Location loc : allAround) {
+        		Fence fence = new Fence(loc, gr);
+        		drawFence(fence, g);
+        	}
+        }
+        
+        public ArrayList<Location> allAround() {
+    		ArrayList<Location> allAround = new ArrayList<Location>();
+    		for (int i = 0; i < 12; i++) {
+    			allAround.add(new Location(i, 0));
+    			allAround.add(new Location(i, 11));
+    			allAround.add(new Location(0, i));
+    			allAround.add(new Location(11, i));
+    		}
+    		return allAround;
+    	}
+    	
+    	public ArrayList<Location> possibleFencePlaces() {
+    		ArrayList<Location> possibleFencePlaces = new ArrayList<Location>();
+    		for (int i = 1; i < 11; i++) {
+    			for (int j = 1; j < 11; j++) {
+    				possibleFencePlaces.add(new Location(i, j));
+    			}
+    		}
+    		return possibleFencePlaces;
+    	}
         // public void placeMhos()
         
+        
         public void drawYou(You you, Graphics g) {
+        	if (you.checkIfDead()) {
+        		
+        	}
                 int width = getCellDim() - 1;
                 int height = getCellDim() - 1;
                 BufferedImage image = null;
@@ -79,7 +113,6 @@ public class Hivolts extends JApplet {
                 {
                         JOptionPane.showMessageDialog(null, "You.jpg not working because " + e);
                 }
-                
                 g.drawImage(image, pixelLoc(you.getLoc()).getCol() + 1, pixelLoc(you.getLoc()).getRow() + 1, width, height, null);
         }
         
@@ -158,25 +191,7 @@ public class Hivolts extends JApplet {
                 }
         }
         
-        
-        //preccess move, not sure if its right at all or if it works.
-       // public void ProccessMove(KeyEvent e){
-       //         if (your turn){
-       //                 if (e.getKeyChar() == q) {
-       //                         You.makemove(up left)
-       //                 }
-       //         }
                 
-        }
+}
         
-        // private class jumpButton extends JButton implements ActionListener
-        // private class rightButton extends JButton implements ActionListener
-        // private class leftButton extends JButton implements ActionListener
-        // private class upButton extends JButton implements ActionListener
-        // private class downButton extends JButton implements ActionListener
-        // private class upRightButton extends JButton implements ActionListener
-        // private class downRightButton extends JButton implements ActionListener
-        // private class upLeftButton extends JButton implements ActionListener
-        // private class downLeftButton extends JButton implements ActionListener
-        // private class doneButton extends JButton implements ActionListener
         
