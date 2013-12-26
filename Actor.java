@@ -30,7 +30,7 @@ public class Actor {
 	}
 	
 	public Location getLoc() {
-		return new Location(actorCol, actorRow);
+		return actorLoc;
 	}
 	
 	
@@ -43,8 +43,5 @@ public class Actor {
 	public Grid getGrid() {
 		return g;
 	}
-	
-	// public void setActorBool(Location loc)
-    // public void eraseActor(Location loc)
 	
 }
