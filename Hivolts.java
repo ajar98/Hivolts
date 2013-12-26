@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -25,6 +26,7 @@ public class Hivolts extends JApplet {
         
         public void init() {
                 setSize(600, 660);
+                JOptionPane.showMessageDialog(null, "You may adjust the window size until you are content, but after, please refrain from changing the window size during the game.");
                 // initActorArray();
         }
         
@@ -32,7 +34,6 @@ public class Hivolts extends JApplet {
                 Graphics2D graphics = (Graphics2D) g;
                 int width = getWidth();
                 int height = getHeight();
-                
                 if (width > (int) (height / 1.1)) { // horizontal too large
                         playHivolts((int) (height / 1.1), height, g);
                 } else if (height > (int) (width * 1.1)) { // vertical too large
@@ -44,15 +45,15 @@ public class Hivolts extends JApplet {
         }
         
         public void playHivolts(int width, int height, Graphics g) {
-                drawGrid(width, height, g);
-                Grid gr = new Grid();
-                placeFences(allAround(), possibleFencePlaces(), gr, g);
-                // placeYou()
-                // placeFences()
-                // placeMhos()
-                // while (finished != true) {
-                        // play game
-                // }
+        	antiAlias(g);
+        	drawGrid(width, height, g);
+            Grid gr = new Grid();
+            placeFences(gr, g);
+            placeMhos(gr, g);
+            placeYou(gr, g);
+            // while (finished != true) {
+                    // play game
+            // }
         }
         
         public void nullLoc(Location loc, Graphics g) {
@@ -60,18 +61,30 @@ public class Hivolts extends JApplet {
         	g.fillRect(pixelLoc(loc).getCol() + 1, pixelLoc(loc).getRow() + 1, getCellDim() - 1, getCellDim() - 1);
         }
         
-        public void placeYou(Grid gr, Location[] locs) {
-        	Random r = new Random();
-        	int randLocIndex = r.nextInt(locs.length);
-        	Location youLoc = locs[randLocIndex];
-        	You you = new You(youLoc, gr);
-        }
-        
-        public void placeFences(ArrayList<Location> allAround, ArrayList<Location> rest, Grid gr, Graphics g) {
-        	for (Location loc : allAround) {
+        public void placeFences(Grid gr, Graphics g) {
+        	for (Location loc : allAround()) {
         		Fence fence = new Fence(loc, gr);
         		drawFence(fence, g);
         	}
+        	for (Location loc : choosePlaces(possibleFencePlaces())) {
+        		Fence fence = new Fence(loc, gr);
+        		drawFence(fence, g);
+        	}
+        }
+        
+        public void placeMhos(Grid gr, Graphics g) {
+        	for (Location loc : choosePlaces(possibleMhoPlaces(gr))) {
+        		Mho mho = new Mho(loc, gr);
+        		drawMho(mho, g);
+        	}
+        }
+        
+        public void placeYou(Grid gr, Graphics g) {
+        	Random r = new Random();
+        	int randLocIndex = r.nextInt(possibleYouPlaces(gr).size());
+        	Location youLoc = possibleYouPlaces(gr).get(randLocIndex);
+        	You you = new You(youLoc, gr);
+        	drawYou(you, g);
         }
         
         public ArrayList<Location> allAround() {
@@ -94,8 +107,37 @@ public class Hivolts extends JApplet {
     		}
     		return possibleFencePlaces;
     	}
-        // public void placeMhos()
+    	
+        public ArrayList<Location> possibleMhoPlaces(Grid gr) {
+        	ArrayList<Location> possibleMhoPlaces = new ArrayList<Location>();
+        	for (Location loc : possibleFencePlaces()) {
+        		if (gr.isValid(loc)) {
+        			possibleMhoPlaces.add(loc);
+        		}
+        	}
+        	return possibleMhoPlaces;
+        }
         
+        public ArrayList<Location> possibleYouPlaces(Grid gr) {
+        	ArrayList<Location> possibleYouPlaces = new ArrayList<Location>();
+        	for (Location loc : possibleFencePlaces()) {
+        		if (gr.isValid(loc)) {
+        			possibleYouPlaces.add(loc);
+        		}
+        	}
+        	return possibleYouPlaces;
+        }
+
+        public ArrayList<Location> choosePlaces(ArrayList<Location> possibleLocs) {
+    		ArrayList<Location> places = new ArrayList<Location>();
+    		Random r = new Random();
+    		for (Location loc : possibleLocs) {
+    			if (r.nextBoolean()) {
+    				places.add(loc);
+    			}	
+    		}
+    		return places;
+    	}
         
         public void drawYou(You you, Graphics g) {
         	if (you.checkIfDead()) {
@@ -152,13 +194,12 @@ public class Hivolts extends JApplet {
         	
         }
         
-        
         public int getCellDim() {
                 int dim;
-                if (getWidth() > (int) (getHeight() / 1.1)) { // horizontal too large
-                        dim = (int) (((int) (getHeight() / 1.1) - 13) / 14);
+                if ((double) getWidth() > (getHeight() / 1.1)) { // horizontal too large
+                        dim = (int) (((getHeight() / 1.1) - 13.0) / 14.0);
                 } else { // width is fine
-                        dim = (int) ((getWidth() - 13) / 14);
+                        dim = (int) (((double) (getWidth()) - 13.0) / 14.0);
                 }
                 return dim;
         }
@@ -178,6 +219,8 @@ public class Hivolts extends JApplet {
                 int cell_width = offset;
                 int cell_height = offset;
                 g.setColor(Color.black);
+                g.fillRect(offset, offset, width - ((2*offset) + 10), width - ((2*offset) + 10));
+                g.setColor(Color.white);
                 for (int row = 0; row <= ROWS; row++) {
                         g.drawLine(offset,
                                         offset + (row * (cell_height + 1)), offset
@@ -191,7 +234,10 @@ public class Hivolts extends JApplet {
                 }
         }
         
-                
+        public void antiAlias(Graphics g) {
+        	((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, // anti aliasing
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+        }          
 }
         
         
