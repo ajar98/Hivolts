@@ -17,7 +17,6 @@ public class Hivolts extends JApplet {
         
         private final int ROWS = 12;
         private final int COLS = 12;
-        // boolean[][] actors = new boolean[COLS][ROWS]; SHOULD BE IN ACTOR.JAVA
         boolean finished = false;
         
         public Hivolts() { }
@@ -27,7 +26,6 @@ public class Hivolts extends JApplet {
         public void init() {
                 setSize(600, 660);
                 JOptionPane.showMessageDialog(null, "You may adjust the window size until you are content, but after, please refrain from changing the window size during the game.");
-                // initActorArray();
         }
         
         public void paint(Graphics g) {
