@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -73,14 +74,14 @@ public class Hivolts extends JApplet {
         		Fence fence = new Fence(loc, gr);
         		drawFence(fence, g);
         	}
-        	for (Location loc : choosePlaces(possibleFencePlaces())) {
+        	for (Location loc : choosePlaces(20, possibleFencePlaces())) {
         		Fence fence = new Fence(loc, gr);
         		drawFence(fence, g);
         	}
         }
         
         public void placeMhos(Grid gr, Graphics g) {
-        	for (Location loc : choosePlaces(possibleMhoPlaces(gr))) {
+        	for (Location loc : choosePlaces(12, possibleMhoPlaces(gr))) {
         		Mho mho = new Mho(loc, gr);
         		drawMho(mho, g);
         	}
@@ -112,6 +113,7 @@ public class Hivolts extends JApplet {
     				possibleFencePlaces.add(new Location(i, j));
     			}
     		}
+    		Collections.shuffle(possibleFencePlaces);
     		return possibleFencePlaces;
     	}
     	
@@ -122,7 +124,8 @@ public class Hivolts extends JApplet {
         			possibleMhoPlaces.add(loc);
         		}
         	}
-        	return possibleMhoPlaces;
+        	Collections.shuffle(possibleMhoPlaces);
+    		return possibleMhoPlaces;
         }
         
         public ArrayList<Location> possibleYouPlaces(Grid gr) {
@@ -135,14 +138,13 @@ public class Hivolts extends JApplet {
         	return possibleYouPlaces;
         }
 
-        public ArrayList<Location> choosePlaces(ArrayList<Location> possibleLocs) {
+        public ArrayList<Location> choosePlaces(int num, ArrayList<Location> possibleLocs) {
     		ArrayList<Location> places = new ArrayList<Location>();
     		Random r = new Random();
-    		for (Location loc : possibleLocs) {
-    			if (r.nextBoolean()) {
-    				places.add(loc);
-    			}	
-    		}
+    		for (int i = 0; i < num; i++) {
+        		num--;
+        		places.add(possibleLocs.get(i));	
+        	}
     		return places;
     	}
         
