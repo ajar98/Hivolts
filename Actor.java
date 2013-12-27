@@ -5,11 +5,17 @@ public class Actor {
 	private int actorCol;
 	private int actorRow;
 	private final Grid g;
+	public String actorName;
 	
-	public Actor(Location loc, Grid gr) { 
+	public Actor(Location loc, Grid gr, String name) { 
 		actorLoc = loc;
 		g = gr;
-		gr.putActor(loc);
+		actorName = name;
+		gr.putActor(this);
+	}
+	
+	public String getName() {
+		return actorName;
 	}
 	
 	public void setCol(int col) {
