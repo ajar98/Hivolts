@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -18,10 +19,9 @@ public class Hivolts extends JApplet {
         private final int ROWS = 12;
         private final int COLS = 12;
         boolean finished = false;
+        Grid gr = new Grid();
         
         public Hivolts() { }
-        
-        
         
         public void init() {
                 setSize(600, 660);
@@ -32,6 +32,8 @@ public class Hivolts extends JApplet {
                 Graphics2D graphics = (Graphics2D) g;
                 int width = getWidth();
                 int height = getHeight();
+                g.setColor(Color.black);
+                g.fillRect(0, 0, width, height);
                 if (width > (int) (height / 1.1)) { // horizontal too large
                         playHivolts((int) (height / 1.1), height, g);
                 } else if (height > (int) (width * 1.1)) { // vertical too large
@@ -45,7 +47,7 @@ public class Hivolts extends JApplet {
         public void playHivolts(int width, int height, Graphics g) {
         	antiAlias(g);
         	drawGrid(width, height, g);
-            Grid gr = new Grid();
+            
             placeFences(gr, g);
             placeMhos(gr, g);
             placeYou(gr, g);
@@ -55,7 +57,7 @@ public class Hivolts extends JApplet {
         }
         
         public void nullLoc(Location loc, Graphics g) {
-        	g.setColor(Color.white);
+        	g.setColor(Color.black);
         	g.fillRect(pixelLoc(loc).getCol() + 1, pixelLoc(loc).getRow() + 1, getCellDim() - 1, getCellDim() - 1);
         }
         
@@ -138,10 +140,8 @@ public class Hivolts extends JApplet {
     	}
         
         public void drawYou(You you, Graphics g) {
-        	if (you.checkIfDead()) {
-        		
-        	}
-                int width = getCellDim() - 1;
+        	if (!you.checkIfDead()) {
+        		int width = getCellDim() - 1;
                 int height = getCellDim() - 1;
                 BufferedImage image = null;
                 try
@@ -154,6 +154,10 @@ public class Hivolts extends JApplet {
                         JOptionPane.showMessageDialog(null, "You.jpg not working because " + e);
                 }
                 g.drawImage(image, pixelLoc(you.getLoc()).getCol() + 1, pixelLoc(you.getLoc()).getRow() + 1, width, height, null);
+        	} else {
+        		finished = false;
+        	}
+                
         }
         
         public void drawFence(Fence fence, Graphics g){
@@ -217,7 +221,6 @@ public class Hivolts extends JApplet {
                 int cell_width = offset;
                 int cell_height = offset;
                 g.setColor(Color.black);
-                g.fillRect(offset, offset, width - ((2*offset) + 10), width - ((2*offset) + 10));
                 g.setColor(Color.white);
                 for (int row = 0; row <= ROWS; row++) {
                         g.drawLine(offset,
@@ -230,12 +233,16 @@ public class Hivolts extends JApplet {
                                         offset + (col * (cell_width + 1)), offset
                                         + ROWS * (cell_height + 1));
                 }
+                Font Hivolts = new Font("TimesRoman", Font.BOLD, offset);
+                g.setFont(Hivolts);
+                g.drawString("HIVOLTS",(int) (offset * 5.5), height - offset);
         }
         
         public void antiAlias(Graphics g) {
         	((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, // anti aliasing
                     RenderingHints.VALUE_ANTIALIAS_ON);
         }          
+
 }
         
         
