@@ -20,12 +20,19 @@ public class Hivolts extends JApplet {
         private final int COLS = 12;
         boolean finished = false;
         Grid gr = new Grid();
+        String size;
         
         public Hivolts() { }
         
         public void init() {
-                setSize(600, 660);
-                JOptionPane.showMessageDialog(null, "You may adjust the window size until you are content, but after, please refrain from changing the window size during the game.");
+        	size = JOptionPane.showInputDialog(null, "Would you like the window size: big, medium or small");
+        	if (size.equalsIgnoreCase("big")) {
+        		setSize(600, 660);
+        	} else if (size.equalsIgnoreCase("medium")) {
+        		setSize(500, 550);
+        	} else if (size.equalsIgnoreCase("small")) {
+        		setSize(400, 440);
+        	}
         }
         
         public void paint(Graphics g) {
