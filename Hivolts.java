@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,21 +17,25 @@ import javax.swing.JApplet;
 import javax.swing.JOptionPane;
 
 
-public class Hivolts extends JApplet {
+public class Hivolts extends JApplet implements KeyListener {
         
         private final int ROWS = 12;
         private final int COLS = 12;
+        Graphics2D g2d;
         boolean finished = false;
         Grid gr = new Grid();
         String size;
+        You you;
         
         public Hivolts() { }
         
         public void init() {
-                size = JOptionPane.showInputDialog(null, "Would you like the window size: big, medium or small");
-                if (size.equalsIgnoreCase("big")) setSize(600, 660);
-                else if (size.equalsIgnoreCase("medium")) setSize(500, 550);
-                else if (size.equalsIgnoreCase("small")) setSize(400, 440);
+        	addKeyListener(this);
+        	setFocusable(true);
+            size = JOptionPane.showInputDialog(null, "Would you like the window size: big, medium or small");
+            if (size.equalsIgnoreCase("big")) setSize(600, 660);
+            else if (size.equalsIgnoreCase("medium")) setSize(500, 550);
+            else if (size.equalsIgnoreCase("small")) setSize(400, 440);
         }
         
         public void paint(Graphics g) {
@@ -49,8 +55,8 @@ public class Hivolts extends JApplet {
         }
         
         public void playHivolts(int width, int height, Graphics g) {
-                antiAlias(g);
-                drawGrid(width, height, g);
+            antiAlias(g);
+            drawGrid(width, height, g);
             placeFences(gr, g);
             placeMhos(gr, g);
             placeYou(gr, g);
@@ -86,7 +92,7 @@ public class Hivolts extends JApplet {
                 Random r = new Random();
                 int randLocIndex = r.nextInt(possibleYouPlaces(gr).size());
                 Location youLoc = possibleYouPlaces(gr).get(randLocIndex);
-                You you = new You(youLoc, gr);
+                you = new You(youLoc, gr);
                 drawYou(you, g);
         }
         
@@ -243,7 +249,48 @@ public class Hivolts extends JApplet {
         public void antiAlias(Graphics g) {
                 ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, // anti aliasing
                     RenderingHints.VALUE_ANTIALIAS_ON);
-        }          
+        }
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			switch(e.getKeyChar()) {
+				case 'j': // j
+					you.jump();
+					// get one more move
+					break;
+				case 's': // s
+					break;
+				case 'q':
+					you.move(you.adjacentLocations().get(7));
+					break;
+				case 'w':
+					you.move(you.adjacentLocations().get(0));
+					break;
+				case 'e':
+					you.move(you.adjacentLocations().get(1));
+					break;
+				case 'a':
+					you.move(you.adjacentLocations().get(2));
+					break;
+				case 'd':
+					you.move(you.adjacentLocations().get(3));
+					break;
+				case 'z':
+					you.move(you.adjacentLocations().get(4));
+					break;
+				case 'x':
+					you.move(you.adjacentLocations().get(5));
+					break;
+				case 'c':
+					you.move(you.adjacentLocations().get(6));
+					break;
+			}
+			
+		}
+		
+		public void keyReleased(KeyEvent e) { }
+
+		public void keyTyped(KeyEvent e) { }          
 
 }
         
