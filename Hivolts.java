@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,13 +26,9 @@ public class Hivolts extends JApplet {
         
         public void init() {
         	size = JOptionPane.showInputDialog(null, "Would you like the window size: big, medium or small");
-        	if (size.equalsIgnoreCase("big")) {
-        		setSize(600, 660);
-        	} else if (size.equalsIgnoreCase("medium")) {
-        		setSize(500, 550);
-        	} else if (size.equalsIgnoreCase("small")) {
-        		setSize(400, 440);
-        	}
+        	if (size.equalsIgnoreCase("big")) setSize(600, 660);
+        	else if (size.equalsIgnoreCase("medium")) setSize(500, 550);
+        	else if (size.equalsIgnoreCase("small")) setSize(400, 440);
         }
         
         public void paint(Graphics g) {
@@ -55,7 +50,6 @@ public class Hivolts extends JApplet {
         public void playHivolts(int width, int height, Graphics g) {
         	antiAlias(g);
         	drawGrid(width, height, g);
-            
             placeFences(gr, g);
             placeMhos(gr, g);
             placeYou(gr, g);
@@ -120,7 +114,7 @@ public class Hivolts extends JApplet {
         public ArrayList<Location> possibleMhoPlaces(Grid gr) {
         	ArrayList<Location> possibleMhoPlaces = new ArrayList<Location>();
         	for (Location loc : possibleFencePlaces()) {
-        		if (gr.isValid(loc)) {
+        		if (!gr.isValid(loc)) {
         			possibleMhoPlaces.add(loc);
         		}
         	}
@@ -131,7 +125,7 @@ public class Hivolts extends JApplet {
         public ArrayList<Location> possibleYouPlaces(Grid gr) {
         	ArrayList<Location> possibleYouPlaces = new ArrayList<Location>();
         	for (Location loc : possibleFencePlaces()) {
-        		if (gr.isValid(loc)) {
+        		if (!gr.isValid(loc)) {
         			possibleYouPlaces.add(loc);
         		}
         	}
@@ -140,9 +134,7 @@ public class Hivolts extends JApplet {
 
         public ArrayList<Location> choosePlaces(int num, ArrayList<Location> possibleLocs) {
     		ArrayList<Location> places = new ArrayList<Location>();
-    		Random r = new Random();
     		for (int i = 0; i < num; i++) {
-        		num--;
         		places.add(possibleLocs.get(i));	
         	}
     		return places;
@@ -244,7 +236,7 @@ public class Hivolts extends JApplet {
                 }
                 Font Hivolts = new Font("TimesRoman", Font.BOLD, offset);
                 g.setFont(Hivolts);
-                g.drawString("HIVOLTS",(int) (offset * 5.5), height - offset);
+                g.drawString("HIVOLTS",(int) (offset * 5.3), height - offset);
         }
         
         public void antiAlias(Graphics g) {
