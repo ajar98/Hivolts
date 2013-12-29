@@ -1,26 +1,16 @@
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 
-import javax.imageio.ImageIO;
 import javax.swing.JApplet;
 import javax.swing.JOptionPane;
 
 
 public class Hivolts extends JApplet implements KeyListener {
         
-        private final int ROWS = 12;
-        private final int COLS = 12;
         Graphics2D g2d;
         boolean finished = false;
         Grid gr;
@@ -57,9 +47,6 @@ public class Hivolts extends JApplet implements KeyListener {
         public void playHivolts(int width, int height, Graphics g) {
             gr = new Grid(width, height, g);
             gr.drawGrid();
-            gr.placeFences();
-            gr.placeMhos();
-            gr.placeYou();
             // while (finished != true) {
                     // play game
             // }
