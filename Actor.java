@@ -1,16 +1,16 @@
 public class Actor {
         
-        private final Location actorLoc;
+        private Location actorLoc;
         private int actorCol;
         private int actorRow;
         private final Grid g;
         public String actorName;
         
         public Actor(Location loc, Grid gr, String name) { 
-                actorLoc = loc;
-                g = gr;
-                actorName = name;
-                gr.putActor(this);
+             actorLoc = loc;
+             g = gr;
+             actorName = name;
+             gr.putActor(this);
         }
         
         public String getName() {
@@ -34,6 +34,10 @@ public class Actor {
                 actorRow = row;
         }
         
+        public void setLoc(Location loc) {
+        	actorLoc = loc;
+        }
+        
         public Location getLoc() {
                 return actorLoc;
         }
@@ -41,8 +45,8 @@ public class Actor {
         
         
         public void move(Location nextLoc) {
-                setCol(nextLoc.getCol());
-                setRow(nextLoc.getRow());
+        	g.nullLoc(actorLoc);
+            setLoc(nextLoc);
         }
         
         public Grid getGrid() {
