@@ -1,3 +1,5 @@
+
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -11,6 +13,24 @@ public class Mho extends Actor {
 	int col = youLoc.getCol();
 	Location loc;
 	
+	// Mho rows/columns
+	int mRow = getLoc().getRow();
+	int mCol = getLoc().getCol();
+	
+	// Mho possible positions
+	Location c = (new Location ((mCol), (mRow)));           //current position
+	Location ul = (new Location ((mCol - 1), (mRow - 1)));  //up and left
+	Location u = (new Location ((mCol), (mRow - 1)));       //up
+	Location ur = (new Location ((mCol + 1), (mRow - 1)));  //up and right
+	Location r = new Location ((mCol + 1), (mRow));       //right
+	Location dr = (new Location ((mCol + 1), (mRow + 1)));  //down and right
+	Location d = (new Location ((mCol), (mRow + 1)));       //down
+	Location dl = (new Location ((mCol - 1), (mRow + 1)));  //down and left
+	Location l = (new Location ((mCol - 1), (mRow)));       //left
+	
+	
+	
+	
         public Mho(Location loc, Grid gr) {
             super(loc, gr, "Mho");
             drawMho();
@@ -19,58 +39,120 @@ public class Mho extends Actor {
         public void nextMove(){
         	
         	// in the same row
-        	if (row == loc.getRow()){
-        		if (col < loc.getCol()){
-        			//move to (col + 1, row)
+        	if (row == mRow){
+        		if (col < mCol){
+        			if (getGrid().getActorName(l).equals("Mho")){
+        				move(c);
+        			}
+        			else {
+        				move(l);
+        			}
         		}
         		else {
-        			//move to (col - 1, row)
+        			if (getGrid().getActorName(r).equals("Mho")){
+        				move(c);
+        			}
+        			else {
+        				move(r);
+        			}
         		}
         	}
         	
         	//in the same col
-        	if (col == loc.getCol()){
-        		if (row < loc.getRow()){
-        			//move to (col, row + 1)
+        	if (col == mCol){
+        		if (row < mRow){
+        			if (getGrid().getActorName(u).equals("Mho")){
+        				move(c);
+        			}
+        			else {
+        				move(u);
+        			}
         		}
         		else{
-        			//move to (col, row - 1)
+        			if (getGrid().getActorName(d).equals("Mho")){
+        				move(c);
+        			}
+        			else {
+        				move(d);
+        			}
         		}
         	}
         	
+       
+        	
         	//in the same diagonal
-        	if (Math.abs(row - loc.getRow()) == Math.abs(col - loc.getCol())){
-        		if((loc.getRow() < row) && (loc.getCol() < col)){
-        			//move (col +, row +)
+        	if (Math.abs(row - mRow) == Math.abs(col - mCol)){
+        		if((mRow < row) && (mCol < col)){
+        			if (getGrid().getActorName(dr).equals("Mho")){
+        				move(c);
+        			}
+        			else {
+        				move(dr);
+        			}
         		}
-        		if((loc.getRow() > row) && (loc.getCol() < col)){
-        			//move (col +, row -)
+        		if((mRow > row) && (mCol < col)){
+        			if (getGrid().getActorName(ur).equals("Mho")){
+        				move(c);
+        			}
+        			else {
+        				move(ur);
+        			}
         		}
-        		if ((loc.getRow() < row) && (loc.getCol() > col)){
-        			//move (col -, row +)
+        		if ((mRow < row) && (mCol > col)){
+        			if (getGrid().getActorName(dl).equals("Mho")){
+        				move(c);
+        			}
+        			else {
+        				move(dl);
+        			}
         		}
-        		if ((loc.getRow() > row) && (loc.getCol() > col)){
-        			// move (col -, row -)
+        		if ((mRow > row) && (mCol > col)){
+        			if (getGrid().getActorName(ul).equals("Mho")){
+        				move(c);
+        			}
+        			else {
+        				move(ul);
+        			}
         		}
         		
         	}
         	
         	//horizontal is greater than vertical
-        	if (Math.abs(col - loc.getCol()) > Math.abs(row - loc.getRow())){
-        		if(loc.getCol() > col){
-        			//move (col +, row)
+        	if (Math.abs(col - mCol) > Math.abs(row - mRow)){
+        		if(mCol > col){
+        			if (getGrid().getActorName(l).equals("Mho")){
+        				move(c);
+        			}
+        			else {
+        				move(l);
+        			}
         		}
-        		if(loc.getCol() < col){
-        			//move (col -, row )
+        		if(mCol < col){
+        			if (getGrid().getActorName(r).equals("Mho")){
+        				move(c);
+        			}
+        			else {
+        				move(r);
+        			}
         	}
         	
         	//vertical is greater than horizontal
-        	if (Math.abs(col - loc.getCol()) < Math.abs(row - loc.getRow())){
-        		if(loc.getRow() > row){
-        			//move (col -, row)
+        	if (Math.abs(col - mCol) < Math.abs(row - mRow)){
+        		if(mRow > row){
+        			if (getGrid().getActorName(u).equals("Mho")){
+        				move(c);
+        			}
+        			else {
+        				move(u);
+        			}
         		}
-        		if(loc.getRow() < row){
-        			//move (col +, row)
+        		if(mRow < row){
+        			if (getGrid().getActorName(d).equals("Mho")){
+        				move(c);
+        			}
+        			else {
+        				move(d);
+        			}
         		}
         		
         	}
@@ -95,5 +177,7 @@ public class Mho extends Actor {
     		getGrid().getGraphics().drawImage(image, getGrid().pixelLoc(getLoc()).getCol() + 1, getGrid().pixelLoc(getLoc()).getRow() + 1, width, height, null);
 
     	}
+
 }
+
 
