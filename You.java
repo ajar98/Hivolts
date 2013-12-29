@@ -1,29 +1,56 @@
-import java.util.ArrayList;
-import java.util.Random;
-
-
-public class You extends Actor {
+public class Actor {
         
-        Grid g = super.getGrid();
+        private Location actorLoc;
+        private int actorCol;
+        private int actorRow;
+        private final Grid g;
+        public String actorName;
         
-        public You(Location loc, Grid gr) {
-                super(loc, gr, "You");
+        public Actor(Location loc, Grid gr, String name) { 
+             actorLoc = loc;
+             g = gr;
+             actorName = name;
+             gr.putActor(this);
         }
         
-        public void jump() {
-                ArrayList<Location> jumpLocs = new ArrayList<Location>();
-                for (int i = 0; i < 12; i++) {
-                        for (int j = 0; j < 12; j++) {
-                                if ((g.getActorNameArray()[i][j].equals("Fence")) || (g.getActorNameArray()[i][j].equals("null"))) {
-                                        jumpLocs.add(new Location(i, j));
-                                }
-                        }
-                }
-                Random r = new Random();
-                int jumpIndex = r.nextInt(jumpLocs.size());
-                move(jumpLocs.get(jumpIndex));
+        public String getName() {
+                return actorName;
         }
         
-        // public ArrayList<Location> adjacentLocations()
-
+        public void setCol(int col) {
+                actorCol = col;
+        }
+        
+        public boolean checkIfDead() {
+                boolean death;
+                if (g.isValid(actorLoc))
+                        death = false;
+                else
+                        death = true;
+                return death;
+        }
+        
+        public void setRow(int row) {
+                actorRow = row;
+        }
+        
+        public void setLoc(Location loc) {
+        	actorLoc = loc;
+        }
+        
+        public Location getLoc() {
+                return actorLoc;
+        }
+        
+        
+        
+        public void move(Location nextLoc) {
+        	g.nullLoc(actorLoc);
+            setLoc(nextLoc);
+        }
+        
+        public Grid getGrid() {
+                return g;
+        }
+        
 }
