@@ -86,6 +86,18 @@ public class Grid {
 		return youLoc;
 	}  
 
+	public String getActorName(Location loc) {
+		String actorName = "null";
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 0; j < COLS; j++) {
+				if ((loc.getCol() == i) && (loc.getRow() == j)) {
+					actorName = getActorNameArray()[i][j];
+				}
+			}
+		}
+		return actorName;
+	}
+
 	void drawGrid() {
 		int offset = (int) ((gridWidth - 13)/14);
 		int cell_width = offset;
@@ -106,6 +118,9 @@ public class Grid {
 		Font Hivolts = new Font("TimesRoman", Font.BOLD, offset);
 		g.setFont(Hivolts);
 		g.drawString("HIVOLTS",(int) (offset * 5.3), gridHeight - offset);
+		placeFences();
+		placeMhos();
+		placeYou();
 	}
 
 	public int getCellDim() {
