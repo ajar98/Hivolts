@@ -1,3 +1,9 @@
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
 
 public class Mho extends Actor {
 	Location youLoc = getGrid().getYou();
@@ -6,7 +12,8 @@ public class Mho extends Actor {
 	Location loc;
 	
         public Mho(Location loc, Grid gr) {
-                super(loc, gr, "Mho");
+            super(loc, gr, "Mho");
+            drawMho();
         }
         
         public void nextMove(){
@@ -16,7 +23,7 @@ public class Mho extends Actor {
         		if (col < loc.getCol()){
         			//move to (col + 1, row)
         		}
-        		else{
+        		else {
         			//move to (col - 1, row)
         		}
         	}
@@ -70,5 +77,23 @@ public class Mho extends Actor {
         	
         }
         
+        }
+        
+        public void drawMho(){
+    		int width = getGrid().getCellDim() -1;
+    		int height = getGrid().getCellDim() -1;
+    		BufferedImage image = null;
+    		try
+    		{
+    			image = ImageIO.read(new File("Mho.jpg"));
+    		}
+    		catch(Exception e)
+    		{
+    			JOptionPane.showMessageDialog(null, "Mho.jpg not working because " + e);
+    		}
+
+    		getGrid().getGraphics().drawImage(image, getGrid().pixelLoc(getLoc()).getCol() + 1, getGrid().pixelLoc(getLoc()).getRow() + 1, width, height, null);
+
+    	}
 }
-}
+
