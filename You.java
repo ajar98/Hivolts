@@ -1,56 +1,67 @@
-public class Actor {
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
+
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
+
+public class You extends Actor {
         
-        private Location actorLoc;
-        private int actorCol;
-        private int actorRow;
-        private final Grid g;
-        public String actorName;
+        Grid g = super.getGrid();
         
-        public Actor(Location loc, Grid gr, String name) { 
-             actorLoc = loc;
-             g = gr;
-             actorName = name;
-             gr.putActor(this);
+        public You(Location loc, Grid gr) {
+             super(loc, gr, "You");
+             drawYou(this);
         }
         
-        public String getName() {
-                return actorName;
+        public void jump() {
+                ArrayList<Location> jumpLocs = new ArrayList<Location>();
+                for (int i = 0; i < 12; i++) {
+                        for (int j = 0; j < 12; j++) {
+                                if ((g.getActorNameArray()[i][j].equals("Fence")) || (g.getActorNameArray()[i][j].equals("null"))) {
+                                        jumpLocs.add(new Location(i, j));
+                                }
+                        }
+                }
+                Random r = new Random();
+                int jumpIndex = r.nextInt(jumpLocs.size());
+                move(jumpLocs.get(jumpIndex));
         }
         
-        public void setCol(int col) {
-                actorCol = col;
+        public ArrayList<Location> adjacentLocations() {
+        	ArrayList<Location> adjacentLocations = new ArrayList<Location>();
+        	Location youLoc = super.getLoc();
+        	adjacentLocations.add(new Location(youLoc.getCol(), youLoc.getRow() - 1)); // up
+        	adjacentLocations.add(new Location(youLoc.getCol() + 1, youLoc.getRow() - 1)); // up right
+        	adjacentLocations.add(new Location(youLoc.getCol() + 1, youLoc.getRow())); // right
+        	adjacentLocations.add(new Location(youLoc.getCol() + 1, youLoc.getRow() + 1)); // down right
+        	adjacentLocations.add(new Location(youLoc.getCol(), youLoc.getRow() + 1)); // down
+        	adjacentLocations.add(new Location(youLoc.getCol() - 1, youLoc.getRow() + 1)); // down left
+        	adjacentLocations.add(new Location(youLoc.getCol() - 1, youLoc.getRow())); // left
+        	adjacentLocations.add(new Location(youLoc.getCol() - 1, youLoc.getRow() - 1)); // up left
+        	return adjacentLocations();
         }
         
-        public boolean checkIfDead() {
-                boolean death;
-                if (g.isValid(actorLoc))
-                        death = false;
-                else
-                        death = true;
-                return death;
-        }
-        
-        public void setRow(int row) {
-                actorRow = row;
-        }
-        
-        public void setLoc(Location loc) {
-        	actorLoc = loc;
-        }
-        
-        public Location getLoc() {
-                return actorLoc;
-        }
-        
-        
-        
-        public void move(Location nextLoc) {
-        	g.nullLoc(actorLoc);
-            setLoc(nextLoc);
-        }
-        
-        public Grid getGrid() {
-                return g;
-        }
-        
+        public void drawYou(You you) {
+    		if (!you.checkIfDead()) {
+    			int width = getGrid().getCellDim() - 1;
+    			int height = getGrid().getCellDim() - 1;
+    			BufferedImage image = null;
+    			try
+    			{
+    				image = ImageIO.read(new File("You.jpg"));
+    			}
+    			catch (Exception e) 
+    			{
+    				JOptionPane.showMessageDialog(null, "You.jpg not working because " + e);
+    			}
+    			getGrid().getGraphics().drawImage(image, getGrid().pixelLoc(getLoc()).getCol() + 1, getGrid().pixelLoc(getLoc()).getRow() + 1, width, height, null);
+    		} else {
+    			getGrid().setFinished();
+    		}
+
+    	}
+
 }
