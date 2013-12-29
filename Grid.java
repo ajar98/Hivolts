@@ -32,7 +32,7 @@ public class Grid {
 		gridHeight = height;
 		g = (Graphics2D) graphics;
 	}
-	
+
 	public Graphics getGraphics() {
 		return g;
 	}
@@ -66,7 +66,7 @@ public class Grid {
 		actors[a.getLoc().getCol()][a.getLoc().getRow()] = true;
 		actors2[a.getLoc().getCol()][a.getLoc().getRow()] = a.getName();
 	}
-	
+
 	public boolean[][] getActorArray() {
 		return actors;
 	}
@@ -85,6 +85,24 @@ public class Grid {
 		}
 		return youLoc;
 	}  
+
+	public ArrayList<Mho> getMhoLocs() {
+		ArrayList<Mho> mhoLocs = new ArrayList<Mho>();
+		for (int i = 0; i < COLS; i++) {
+			for (int j = 0; j < ROWS; j++) {
+				if ((getActorName(new Location(i, j))).equalsIgnoreCase("mho")) {
+					mhoLocs.add(new Mho(new Location(i, j), this));
+				}
+			}
+		}
+		return mhoLocs;
+	}
+
+	public void moveMhos() {
+		for (Mho mho : getMhoLocs()) {
+			mho.nextMove();
+		}
+	}
 
 	public String getActorName(Location loc) {
 		String actorName = "null";
