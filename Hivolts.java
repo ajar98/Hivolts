@@ -15,7 +15,6 @@ public class Hivolts extends JApplet implements KeyListener {
 	boolean finished = false;
 	Grid gr;
 	String size;
-	You you;
 
 	public Hivolts() { }
 
@@ -57,51 +56,78 @@ public class Hivolts extends JApplet implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyChar()) {
 		case 'j': // j
-			you.jump();
+			gr.getYou().jump();
+			repaint();
 			// get one more move
 			break;
 		case 's': // s
 			gr.moveMhos();
 			break;
 		case 'q':
-			you.move(you.adjacentLocations().get(7));
+			gr.getYou().move(gr.getYou().adjacentLocations().get(7));
+			repaint();
 			gr.moveMhos();
+			repaint();
 			break;
 		case 'w':
-			you.move(you.adjacentLocations().get(0));
+			gr.getYou().move(gr.getYou().adjacentLocations().get(0));
+			repaint();
 			gr.moveMhos();
+			repaint();
 			break;
 		case 'e':
-			you.move(you.adjacentLocations().get(1));
+			gr.getYou().move(gr.getYou().adjacentLocations().get(1));
+			repaint();
 			gr.moveMhos();
+			repaint();
 			break;
 		case 'a':
-			you.move(you.adjacentLocations().get(2));
+			gr.getYou().move(gr.getYou().adjacentLocations().get(2));
+			repaint();
 			gr.moveMhos();
+			repaint();
 			break;
 		case 'd':
-			you.move(you.adjacentLocations().get(3));
+			gr.getYou().move(gr.getYou().adjacentLocations().get(3));
+			repaint();
 			gr.moveMhos();
+			repaint();
 			break;
 		case 'z':
-			you.move(you.adjacentLocations().get(4));
+			gr.getYou().move(gr.getYou().adjacentLocations().get(4));
+			repaint();
 			gr.moveMhos();
+			repaint();
 			break;
 		case 'x':
-			you.move(you.adjacentLocations().get(5));
+			gr.getYou().move(gr.getYou().adjacentLocations().get(5));
+			repaint();
 			gr.moveMhos();
+			repaint();
 			break;
 		case 'c':
-			you.move(you.adjacentLocations().get(6));
+			gr.getYou().move(gr.getYou().adjacentLocations().get(6));
+			repaint();
 			gr.moveMhos();
+			repaint();
 			break;
 		}
 
 	}
 
-	public void keyReleased(KeyEvent e) { }
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	public void keyTyped(KeyEvent e) { }          
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	       
 
 }
 
