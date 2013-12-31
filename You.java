@@ -25,7 +25,6 @@ public class You extends Actor {
 	}
 
 	public void jump() {
-		JOptionPane.showMessageDialog(null, "I HATE KeyListener, but it got to jump()");
 		ArrayList<Location> jumpLocs = new ArrayList<Location>();
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 12; j++) {
@@ -34,10 +33,8 @@ public class You extends Actor {
 				}
 			}
 		}
-		JOptionPane.showMessageDialog(null, "HEY IT GOT TO HERE!1!!1!!!!!1!!");
 		Random r = new Random();
 		int jumpIndex = r.nextInt(jumpLocs.size());
-		JOptionPane.showMessageDialog(null, jumpLocs.get(jumpIndex));
 		move(jumpLocs.get(jumpIndex));
 	}
 
