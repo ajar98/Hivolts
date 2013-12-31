@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 public class Actor {
 
 	private Location actorLoc;
@@ -40,6 +42,11 @@ public class Actor {
 		if (getName().equalsIgnoreCase("you")) {
 			setLoc(nextLoc);
 			You you = new You(nextLoc, getGrid());
+		} else if (getName().equalsIgnoreCase("mho")) {
+			setLoc(nextLoc);
+			Mho mho = new Mho(nextLoc, getGrid());
+		} else {
+			JOptionPane.showMessageDialog(null, "Invalid actor");
 		}
 	}
 
