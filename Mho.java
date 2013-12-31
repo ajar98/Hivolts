@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 
 public class Mho extends Actor {
-	Location youLoc = getGrid().getYou();
+	Location youLoc = getGrid().getYouLoc();
 	int row = youLoc.getRow();
 	int col = youLoc.getCol();
 	Location loc;
