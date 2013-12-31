@@ -75,7 +75,7 @@ public class Grid {
 		return actors2;
 	}
 
-	public Location getYou() {
+	public Location getYouLoc() {
 		Location youLoc = new Location (-1, -1);
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 12; j++) {
@@ -176,6 +176,10 @@ public class Grid {
 		int randLocIndex = r.nextInt(possibleYouPlaces().size());
 		Location youLoc = possibleYouPlaces().get(randLocIndex);
 		you = new You(youLoc, this);
+	}
+	
+	public You getYou() {
+		return you;
 	}
 
 	public ArrayList<Location> allAround() {
