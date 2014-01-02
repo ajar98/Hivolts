@@ -98,12 +98,6 @@ public class Grid {
 		return mhoLocs;
 	}
 
-	public void moveMhos() {
-		for (Mho mho : getMhoLocs()) {
-			mho.nextMove();
-		}
-	}
-
 	public String getActorName(Location loc) {
 		String actorName = "null";
 		for (int i = 0; i < ROWS; i++) {
@@ -115,15 +109,12 @@ public class Grid {
 		}
 		return actorName;
 	}
-
-	public void showGridVal(Location loc) {
-		JOptionPane.showMessageDialog(null, actors2[loc.getCol()][loc.getRow()]);
-	}
 	
 	void drawGrid() {
 		int offset = (int) ((gridWidth - 13)/14);
 		int cell_width = offset;
 		int cell_height = offset;
+		antiAlias();
 		g.setColor(Color.black);
 		g.setColor(Color.white);
 		for (int row = 0; row <= ROWS; row++) {
@@ -153,11 +144,6 @@ public class Grid {
 			dim = (int) (((double) (gridHeight) - 13.0) / 14.0);
 		}
 		return dim - 4;
-	}
-
-	public void nullLoc(Location loc) {
-		g.setColor(Color.black);
-		g.fillRect(pixelLoc(loc).getCol() + 1, pixelLoc(loc).getRow() + 1, getCellDim() - 1, getCellDim() - 1);
 	}
 
 	public void placeFences() {
