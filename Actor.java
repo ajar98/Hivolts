@@ -46,7 +46,7 @@ public class Actor {
 			setLoc(nextLoc);
 			Mho mho = new Mho(nextLoc, getGrid());
 		} else {
-			JOptionPane.showMessageDialog(null, "Invalid actor");
+			JOptionPane.showMessageDialog(null, "Moving an invalid actor");
 		}
 	}
 
