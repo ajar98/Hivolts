@@ -16,7 +16,7 @@ public class You extends Actor {
 		drawYou(this);
 	}
 
-	public void jump() {
+	public Location jump() {
 		ArrayList<Location> jumpLocs = new ArrayList<Location>();
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 12; j++) {
@@ -27,7 +27,7 @@ public class You extends Actor {
 		}
 		Random r = new Random();
 		int jumpIndex = r.nextInt(jumpLocs.size());
-		move(jumpLocs.get(jumpIndex));
+		return (jumpLocs.get(jumpIndex));
 	}
 
 	public ArrayList<Location> adjacentLocations() {
@@ -58,15 +58,6 @@ public class You extends Actor {
 		}
 		getGrid().getGraphics().drawImage(image, getGrid().pixelLoc(getLoc()).getCol() + 1, getGrid().pixelLoc(getLoc()).getRow() + 1, width, height, null);
 
-	}
-
-	public boolean checkIfDead() {
-		boolean death;
-		if (g.isValid(getLoc()))
-			death = false;
-		else
-			death = true;
-		return death;
 	}
 
 }
