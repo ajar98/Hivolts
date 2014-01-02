@@ -35,21 +35,6 @@ public class Actor {
 		return actorLoc;
 	}
 
-
-
-	public void move(Location nextLoc) {
-		g.nullLoc(actorLoc);
-		if (getName().equalsIgnoreCase("you")) {
-			setLoc(nextLoc);
-			You you = new You(nextLoc, getGrid());
-		} else if (getName().equalsIgnoreCase("mho")) {
-			setLoc(nextLoc);
-			Mho mho = new Mho(nextLoc, getGrid());
-		} else {
-			JOptionPane.showMessageDialog(null, "Moving an invalid actor");
-		}
-	}
-
 	public Grid getGrid() {
 		return g;
 	}
