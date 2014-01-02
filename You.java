@@ -13,15 +13,7 @@ public class You extends Actor {
 
 	public You(Location loc, Grid gr) {
 		super(loc, gr, "You");
-		if (!this.checkIfDead()) {
-			drawYou(this);
-		} else {
-			if (JOptionPane.showConfirmDialog(null, "Would you like to play again?") == 0) {
-				// figure out what goes here to start the game again
-			} else {
-				g.setFinished();
-			}
-		} 
+		drawYou(this);
 	}
 
 	public void jump() {
@@ -49,7 +41,7 @@ public class You extends Actor {
 		adjacentLocations.add(new Location(youLoc.getCol() - 1, youLoc.getRow() + 1)); // down left
 		adjacentLocations.add(new Location(youLoc.getCol() - 1, youLoc.getRow())); // left
 		adjacentLocations.add(new Location(youLoc.getCol() - 1, youLoc.getRow() - 1)); // up left
-		return adjacentLocations();
+		return adjacentLocations;
 	}
 
 	public void drawYou(You you) {
