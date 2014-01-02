@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 
 public class Grid {
 
-	boolean[][] actors = new boolean[12][12];
 	String[][] actors2 = new String[12][12];
 	private final int ROWS = 12;
 	private final int COLS = 12;
@@ -24,25 +23,31 @@ public class Grid {
 	private boolean finished = false;
 	You you;
 	Graphics2D g;
+	ArrayList<Location> fencePlaces = new ArrayList<Location>();
+	ArrayList<Location> mhoPlaces = new ArrayList<Location>();
+	Location youLoc;
 
-	public Grid(int width, int height, Graphics graphics) {
-		initActorArray();
-		initActorNameArray();
+	public Grid(int width, int height, Graphics graphics, ArrayList<Location> fenceLocs, ArrayList<Location> mhoLocs, Location youLocation, String[][] actorNames) {
 		gridWidth = width;
 		gridHeight = height;
 		g = (Graphics2D) graphics;
+		fencePlaces = fenceLocs;
+		mhoPlaces = mhoLocs;
+		youLoc = youLocation;
+		actors2 = actorNames;
+	}
+	
+	public void printArrayList(ArrayList<Location> locs) {
+		String ans = "[";
+		for (Location loc : locs) {
+			ans += loc.printLoc() + ", ";
+		}
+		ans += "]";
+		JOptionPane.showMessageDialog(null, ans);
 	}
 
 	public Graphics getGraphics() {
 		return g;
-	}
-
-	void initActorArray() {
-		for (int i = 0; i < 12; i++) {
-			for (int j = 0; j < 12; j++) {
-				actors[i][j] = false;
-			}
-		}
 	}
 
 	void initActorNameArray() {
@@ -55,7 +60,7 @@ public class Grid {
 
 	public boolean isValid(Location loc) {
 		boolean validity;
-		if (actors[loc.getCol()][loc.getRow()])
+		if (actors2[loc.getCol()][loc.getRow()].equals("null"))
 			validity = true;
 		else
 			validity = false;
@@ -63,12 +68,7 @@ public class Grid {
 	}
 
 	public void putActor(Actor a) {
-		actors[a.getLoc().getCol()][a.getLoc().getRow()] = true;
 		actors2[a.getLoc().getCol()][a.getLoc().getRow()] = a.getName();
-	}
-
-	public boolean[][] getActorArray() {
-		return actors;
 	}
 
 	public String[][] getActorNameArray() {
@@ -116,6 +116,10 @@ public class Grid {
 		return actorName;
 	}
 
+	public void showGridVal(Location loc) {
+		JOptionPane.showMessageDialog(null, actors2[loc.getCol()][loc.getRow()]);
+	}
+	
 	void drawGrid() {
 		int offset = (int) ((gridWidth - 13)/14);
 		int cell_width = offset;
@@ -160,21 +164,18 @@ public class Grid {
 		for (Location loc : allAround()) {
 			Fence fence = new Fence(loc, this);
 		}
-		for (Location loc : choosePlaces(20, possibleFencePlaces())) {
+		for (Location loc : fencePlaces) {
 			Fence fence = new Fence(loc, this);
 		}
 	}
 
 	public void placeMhos() {
-		for (Location loc : choosePlaces(12, possibleMhoPlaces())) {
+		for (Location loc : mhoPlaces) {
 			Mho mho = new Mho(loc, this);
 		}
 	}
 
 	public void placeYou() {
-		Random r = new Random();
-		int randLocIndex = r.nextInt(possibleYouPlaces().size());
-		Location youLoc = possibleYouPlaces().get(randLocIndex);
 		you = new You(youLoc, this);
 	}
 	
@@ -192,47 +193,7 @@ public class Grid {
 		}
 		return allAround;
 	}
-
-	public ArrayList<Location> possibleFencePlaces() {
-		ArrayList<Location> possibleFencePlaces = new ArrayList<Location>();
-		for (int i = 1; i < 11; i++) {
-			for (int j = 1; j < 11; j++) {
-				possibleFencePlaces.add(new Location(i, j));
-			}
-		}
-		Collections.shuffle(possibleFencePlaces);
-		return possibleFencePlaces;
-	}
-
-	public ArrayList<Location> possibleMhoPlaces() {
-		ArrayList<Location> possibleMhoPlaces = new ArrayList<Location>();
-		for (Location loc : possibleFencePlaces()) {
-			if (!isValid(loc)) {
-				possibleMhoPlaces.add(loc);
-			}
-		}
-		Collections.shuffle(possibleMhoPlaces);
-		return possibleMhoPlaces;
-	}
-
-	public ArrayList<Location> possibleYouPlaces() {
-		ArrayList<Location> possibleYouPlaces = new ArrayList<Location>();
-		for (Location loc : possibleFencePlaces()) {
-			if (!isValid(loc)) {
-				possibleYouPlaces.add(loc);
-			}
-		}
-		return possibleYouPlaces;
-	}
-
-	public ArrayList<Location> choosePlaces(int num, ArrayList<Location> possibleLocs) {
-		ArrayList<Location> places = new ArrayList<Location>();
-		for (int i = 0; i < num; i++) {
-			places.add(possibleLocs.get(i));        
-		}
-		return places;
-	}
-
+	
 	public Location pixelLoc(Location loc) {
 		Location pixelLoc;
 		int row = loc.getRow();
