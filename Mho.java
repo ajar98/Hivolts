@@ -35,24 +35,18 @@ public class Mho extends Actor {
 		drawMho();
 	}
 
-	public void nextMove(){
-
+	public Location nextMove(){
+		Location mhoNextLoc = new Location(-1, -1);
 		// in the same row
 		if (row == mRow){
 			if (col < mCol){
-				if (getGrid().getActorName(l).equals("Mho")){
-					move(c);
-				}
-				else {
-					move(l);
+				if (!getGrid().getActorName(l).equals("Mho")){
+					mhoNextLoc = l;
 				}
 			}
 			else {
-				if (getGrid().getActorName(r).equals("Mho")){
-					move(c);
-				}
-				else {
-					move(r);
+				if (!getGrid().getActorName(r).equals("Mho")){
+					mhoNextLoc = r;
 				}
 			}
 		}
@@ -60,19 +54,13 @@ public class Mho extends Actor {
 		//in the same col
 		if (col == mCol){
 			if (row < mRow){
-				if (getGrid().getActorName(u).equals("Mho")){
-					move(c);
-				}
-				else {
-					move(u);
+				if (!getGrid().getActorName(u).equals("Mho")){
+					mhoNextLoc = u;
 				}
 			}
 			else{
-				if (getGrid().getActorName(d).equals("Mho")){
-					move(c);
-				}
-				else {
-					move(d);
+				if (!getGrid().getActorName(d).equals("Mho")){
+					mhoNextLoc = d;
 				}
 			}
 		}
@@ -82,35 +70,23 @@ public class Mho extends Actor {
 		//in the same diagonal
 		if (Math.abs(row - mRow) == Math.abs(col - mCol)){
 			if((mRow < row) && (mCol < col)){
-				if (getGrid().getActorName(dr).equals("Mho")){
-					move(c);
-				}
-				else {
-					move(dr);
+				if (!getGrid().getActorName(dr).equals("Mho")){
+					mhoNextLoc = dr;
 				}
 			}
 			if((mRow > row) && (mCol < col)){
-				if (getGrid().getActorName(ur).equals("Mho")){
-					move(c);
-				}
-				else {
-					move(ur);
+				if (!getGrid().getActorName(ur).equals("Mho")){
+					mhoNextLoc = ur;
 				}
 			}
 			if ((mRow < row) && (mCol > col)){
-				if (getGrid().getActorName(dl).equals("Mho")){
-					move(c);
-				}
-				else {
-					move(dl);
+				if (!getGrid().getActorName(dl).equals("Mho")){
+					mhoNextLoc = dl;
 				}
 			}
 			if ((mRow > row) && (mCol > col)){
-				if (getGrid().getActorName(ul).equals("Mho")){
-					move(c);
-				}
-				else {
-					move(ul);
+				if (!getGrid().getActorName(ul).equals("Mho")){
+					mhoNextLoc = ul;
 				}
 			}
 
@@ -119,44 +95,33 @@ public class Mho extends Actor {
 		//horizontal is greater than vertical
 		if (Math.abs(col - mCol) > Math.abs(row - mRow)){
 			if(mCol > col){
-				if (getGrid().getActorName(l).equals("Mho")){
-					move(c);
-				}
-				else {
-					move(l);
+				if (!getGrid().getActorName(l).equals("Mho")){
+					mhoNextLoc = l;
 				}
 			}
 			if(mCol < col){
-				if (getGrid().getActorName(r).equals("Mho")){
-					move(c);
-				}
-				else {
-					move(r);
+				if (!getGrid().getActorName(r).equals("Mho")){
+					mhoNextLoc = r;
 				}
 			}
 
 			//vertical is greater than horizontal
 			if (Math.abs(col - mCol) < Math.abs(row - mRow)){
 				if(mRow > row){
-					if (getGrid().getActorName(u).equals("Mho")){
-						move(c);
-					}
-					else {
-						move(u);
+					if (!getGrid().getActorName(u).equals("Mho")){
+						mhoNextLoc = u;
 					}
 				}
 				if(mRow < row){
-					if (getGrid().getActorName(d).equals("Mho")){
-						move(c);
-					}
-					else {
-						move(d);
+					if (!getGrid().getActorName(d).equals("Mho")){
+						mhoNextLoc = d;
 					}
 				}
 
 			}
 
 		}
+		return mhoNextLoc;
 
 	}
 
