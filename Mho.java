@@ -36,7 +36,7 @@ public class Mho extends Actor {
 	}
 
 	public Location nextMove(){
-		Location mhoNextLoc = new Location(-1, -1);
+		Location mhoNextLoc = c;
 		// in the same row
 		if (row == mRow){
 			if (col < mCol){
