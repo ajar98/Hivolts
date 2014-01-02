@@ -13,14 +13,13 @@ import javax.swing.JOptionPane;
 
 public class Hivolts extends JApplet implements KeyListener {
 
-	Graphics2D g2d;
 	boolean finished = false;
 	Grid gr;
 	String size;
-	ArrayList<Location> fencePlaces = new ArrayList<Location>();
-	ArrayList<Location> mhoPlaces = new ArrayList<Location>();
+	String[][] actorNames;
+	ArrayList<Location> fencePlaces;
+	ArrayList<Location> mhoPlaces;
 	Location youLoc;
-	String[][] actorNames = new String[12][12];
 
 	public Hivolts() { }
 
@@ -28,13 +27,11 @@ public class Hivolts extends JApplet implements KeyListener {
 		addKeyListener(this);
 		setFocusable(true);
 		setSize(600, 660);
-		initActorNameArray();
-		initFencePlaces();
-		initMhoPlaces();
-		initYouPlace();
+		actorNames = initActorArray();
+		fencePlaces = initFencePlaces();
+		mhoPlaces = initMhoPlaces();
+		youLoc = initYouPlace();
 	}
-	
-	
 
 	public void paint(Graphics g) {
 		Graphics2D graphics = (Graphics2D) g;
@@ -65,59 +62,59 @@ public class Hivolts extends JApplet implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyChar()) {
 		case 'j':
-			gr.getYou().jump();
+			youLoc = gr.getYou().jump();
 			repaint();
 			break;
 		case 's':
-			gr.moveMhos();
+			moveMhos();
 			repaint();
 			break;
 		case 'q':
-			gr.getYou().move(gr.getYou().adjacentLocations().get(7));
+			youLoc = gr.getYou().adjacentLocations().get(7);
 			repaint();
-			gr.moveMhos();
+			moveMhos();
 			repaint();
 			break;
 		case 'w':
-			gr.getYou().move(gr.getYou().adjacentLocations().get(0));
+			youLoc = gr.getYou().adjacentLocations().get(0);
 			repaint();
-			gr.moveMhos();
+			moveMhos();
 			repaint();
 			break;
 		case 'e':
-			gr.getYou().move(gr.getYou().adjacentLocations().get(1));
+			youLoc = gr.getYou().adjacentLocations().get(1);
 			repaint();
-			gr.moveMhos();
+			moveMhos();
 			repaint();
 			break;
 		case 'a':
-			gr.getYou().move(gr.getYou().adjacentLocations().get(2));
+			youLoc = gr.getYou().adjacentLocations().get(2);
 			repaint();
-			gr.moveMhos();
+			moveMhos();
 			repaint();
 			break;
 		case 'd':
-			gr.getYou().move(gr.getYou().adjacentLocations().get(3));
+			youLoc = gr.getYou().adjacentLocations().get(3);
 			repaint();
-			gr.moveMhos();
+			moveMhos();
 			repaint();
 			break;
 		case 'z':
-			gr.getYou().move(gr.getYou().adjacentLocations().get(4));
+			youLoc = gr.getYou().adjacentLocations().get(4);
 			repaint();
-			gr.moveMhos();
+			moveMhos();
 			repaint();
 			break;
 		case 'x':
-			gr.getYou().move(gr.getYou().adjacentLocations().get(5));
+			youLoc = gr.getYou().adjacentLocations().get(5);
 			repaint();
-			gr.moveMhos();
+			moveMhos();
 			repaint();
 			break;
 		case 'c':
-			gr.getYou().move(gr.getYou().adjacentLocations().get(6));
+			youLoc = gr.getYou().adjacentLocations().get(6);
 			repaint();
-			gr.moveMhos();
+			moveMhos();
 			repaint();
 			break;
 		}
@@ -136,24 +133,25 @@ public class Hivolts extends JApplet implements KeyListener {
 		
 	}
 
-	public void initFencePlaces() {
+	public ArrayList<Location> initFencePlaces() {
 		ArrayList<Location> fences = choosePlaces(20, possibleFencePlaces());
 		for (Location loc : fences) {
 			actorNames[loc.getCol()][loc.getRow()] = "fence";
 		}
-		fencePlaces = fences;
+		return fences;
 	}
 	
-	public void initMhoPlaces() {
+	public ArrayList<Location> initMhoPlaces() {
 		ArrayList<Location> mhos = choosePlaces(12, possibleMhoPlaces());
 		for (Location loc : mhos) {
 			actorNames[loc.getCol()][loc.getRow()] = "mho";
 		}
-		mhoPlaces = mhos;
+		return mhos;
 	}
 
-	public void initYouPlace() {
-		youLoc = choosePlaces(1, possibleYouPlaces()).get(0);
+	public Location initYouPlace() {
+		Location youLocation = choosePlaces(1, possibleYouPlaces()).get(0);
+		return youLocation;
 	}
 	
 	public ArrayList<Location> possibleFencePlaces() {
@@ -170,7 +168,7 @@ public class Hivolts extends JApplet implements KeyListener {
 	public ArrayList<Location> possibleMhoPlaces() {
 		ArrayList<Location> possibleMhoPlaces = new ArrayList<Location>();
 		for (Location loc : possibleFencePlaces()) {
-			if (!isValid(loc)) {
+			if (isValid(loc)) {
 				possibleMhoPlaces.add(loc);
 			}
 		}
@@ -181,11 +179,21 @@ public class Hivolts extends JApplet implements KeyListener {
 	public ArrayList<Location> possibleYouPlaces() {
 		ArrayList<Location> possibleYouPlaces = new ArrayList<Location>();
 		for (Location loc : possibleFencePlaces()) {
-			if (!isValid(loc)) {
+			if (isValid(loc)) {
 				possibleYouPlaces.add(loc);
 			}
 		}
 		return possibleYouPlaces;
+	}
+	
+	String[][] initActorArray() {
+		String[][] actors = new String[12][12];
+		for (int i = 0; i < 12; i++) {
+			for (int j = 0; j < 12; j++) {
+				actors[i][j] = "null";
+			}
+		}
+		return actors;
 	}
 	
 	public ArrayList<Location> choosePlaces(int num, ArrayList<Location> possibleLocs) {
@@ -196,14 +204,6 @@ public class Hivolts extends JApplet implements KeyListener {
 		return places;
 	}
 	
-	void initActorNameArray() {
-		for (int i = 0; i < 12; i++) {
-			for (int j = 0; j < 12; j++) {
-				actorNames[i][j] = "null";
-			}
-		}
-	}
-	
 	public boolean isValid(Location loc) {
 		boolean validity;
 		if (actorNames[loc.getCol()][loc.getRow()].equals("null"))
@@ -211,6 +211,12 @@ public class Hivolts extends JApplet implements KeyListener {
 		else
 			validity = false;
 		return validity;
+	}
+	
+	public void moveMhos() {
+		for (int i = 0; i < mhoPlaces.size(); i++) {
+			mhoPlaces.set(i, (new Mho(mhoPlaces.get(i), gr)).nextMove());
+		}
 	}
 	       
 
