@@ -12,7 +12,7 @@ public class Actor {
 		actorLoc = loc;
 		g = gr;
 		actorName = name;
-		gr.putActor(this);
+		if (!name.equals("you")) gr.putActor(this);
 	}
 
 	public String getName() {
