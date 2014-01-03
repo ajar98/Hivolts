@@ -18,13 +18,9 @@ public class You extends Actor {
 			drawYou(this);
 		else {
 			drawYou(this);
-			death = true;
+			gr.setFinished();
 		}
 	}
-	
-	/* public boolean checkIfDead() {
-		return death;
-	} */
 
 	public Location jump() {
 		ArrayList<Location> jumpLocs = new ArrayList<Location>();
