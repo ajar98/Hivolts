@@ -60,64 +60,77 @@ public class Hivolts extends JApplet implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyChar()) {
-		case 'j':
-			youLoc = gr.getYou().jump();
-			repaint();
-			break;
-		case 's':
-			moveMhos();
-			repaint();
-			break;
-		case 'q':
-			youLoc = gr.getYou().adjacentLocations().get(7);
-			repaint();
-			moveMhos();
-			repaint();
-			break;
-		case 'w':
-			youLoc = gr.getYou().adjacentLocations().get(0);
-			repaint();
-			moveMhos();
-			repaint();
-			break;
-		case 'e':
-			youLoc = gr.getYou().adjacentLocations().get(1);
-			repaint();
-			moveMhos();
-			repaint();
-			break;
-		case 'a':
-			youLoc = gr.getYou().adjacentLocations().get(2);
-			repaint();
-			moveMhos();
-			repaint();
-			break;
-		case 'd':
-			youLoc = gr.getYou().adjacentLocations().get(3);
-			repaint();
-			moveMhos();
-			repaint();
-			break;
-		case 'z':
-			youLoc = gr.getYou().adjacentLocations().get(4);
-			repaint();
-			moveMhos();
-			repaint();
-			break;
-		case 'x':
-			youLoc = gr.getYou().adjacentLocations().get(5);
-			repaint();
-			moveMhos();
-			repaint();
-			break;
-		case 'c':
-			youLoc = gr.getYou().adjacentLocations().get(6);
-			repaint();
-			moveMhos();
-			repaint();
-			break;
+		if (gr.getYou().checkIfDead()) {
+			int again = JOptionPane.showConfirmDialog(null, "Would you like to play again?");
+			if (again == 0) {
+				init();
+			} else {
+				finished = true;
+			}
 		}
+		if (!finished) {
+			switch(e.getKeyChar()) {
+			case 'j':
+				youLoc = gr.getYou().jump();
+				repaint();
+				break;
+			case 's':
+				moveMhos();
+				repaint();
+				break;
+			case 'q':
+				youLoc = gr.getYou().adjacentLocations().get(7);
+				repaint();
+				moveMhos();
+				repaint();
+				break;
+			case 'w':
+				youLoc = gr.getYou().adjacentLocations().get(0);
+				repaint();
+				moveMhos();
+				repaint();
+				break;
+			case 'e':
+				youLoc = gr.getYou().adjacentLocations().get(1);
+				repaint();
+				moveMhos();
+				repaint();
+				break;
+			case 'd':
+				youLoc = gr.getYou().adjacentLocations().get(2);
+				repaint();
+				moveMhos();
+				repaint();
+				break;
+			case 'a':
+				youLoc = gr.getYou().adjacentLocations().get(6);
+				repaint();
+				moveMhos();
+				repaint();
+				break;
+			case 'c':
+				youLoc = gr.getYou().adjacentLocations().get(4);
+				repaint();
+				moveMhos();
+				repaint();
+				break;
+			case 'x':
+				youLoc = gr.getYou().adjacentLocations().get(5);
+				repaint();
+				moveMhos();
+				repaint();
+				break;
+			case 'z':
+				youLoc = gr.getYou().adjacentLocations().get(6);
+				repaint();
+				moveMhos();
+				repaint();
+				break;
+			}
+		} else {
+			stop();
+		}
+		
 
 	}
 
@@ -206,7 +219,7 @@ public class Hivolts extends JApplet implements KeyListener {
 	
 	public boolean isValid(Location loc) {
 		boolean validity;
-		if (actorNames[loc.getCol()][loc.getRow()].equals("null"))
+		if ((actorNames[loc.getCol()][loc.getRow()].equals("null")) || (actorNames[loc.getCol()][loc.getRow()].equals("you")))
 			validity = true;
 		else
 			validity = false;
