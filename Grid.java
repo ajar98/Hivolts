@@ -194,5 +194,13 @@ public class Grid {
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, // anti aliasing
 				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
+	
+	public boolean getFinished() {
+		return finished;
+	}
+	
+	public void setFinished() {
+		finished = !finished;
+	}
 
 } 
