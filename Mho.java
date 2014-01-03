@@ -7,12 +7,9 @@ import javax.swing.JOptionPane;
 
 
 public class Mho extends Actor {
-	Location youLoc = getGrid().getYouLoc();
-	int row = youLoc.getRow();
-	int col = youLoc.getCol();
 	Location loc;
 
-	// Mho rows/columns
+	// Mho getGrid().getYou().getLoc().getRow()s/getGrid().getYou().getLoc().getCol()umns
 	int mRow = getLoc().getRow();
 	int mCol = getLoc().getCol();
 
@@ -27,9 +24,6 @@ public class Mho extends Actor {
 	Location dl = (new Location ((mCol - 1), (mRow + 1)));  //down and left
 	Location l = (new Location ((mCol - 1), (mRow)));       //left
 
-
-
-
 	public Mho(Location loc, Grid gr) {
 		super(loc, gr, "Mho");
 		drawMho();
@@ -37,9 +31,9 @@ public class Mho extends Actor {
 
 	public Location nextMove(){
 		Location mhoNextLoc = c;
-		// in the same row
-		if (row == mRow){
-			if (col < mCol){
+		// in the same getGrid().getYou().getLoc().getRow()
+		if (getGrid().getYou().getLoc().getRow() == mRow){
+			if (getGrid().getYou().getLoc().getCol() < mCol){
 				if (!getGrid().getActorName(l).equals("Mho")){
 					mhoNextLoc = l;
 				}
@@ -51,9 +45,9 @@ public class Mho extends Actor {
 			}
 		}
 
-		//in the same col
-		if (col == mCol){
-			if (row < mRow){
+		//in the same getGrid().getYou().getLoc().getCol()
+		if (getGrid().getYou().getLoc().getCol() == mCol){
+			if (getGrid().getYou().getLoc().getRow() < mRow){
 				if (!getGrid().getActorName(u).equals("Mho")){
 					mhoNextLoc = u;
 				}
@@ -68,23 +62,23 @@ public class Mho extends Actor {
 
 
 		//in the same diagonal
-		if (Math.abs(row - mRow) == Math.abs(col - mCol)){
-			if((mRow < row) && (mCol < col)){
+		if (Math.abs(getGrid().getYou().getLoc().getRow() - mRow) == Math.abs(getGrid().getYou().getLoc().getCol() - mCol)){
+			if((mRow < getGrid().getYou().getLoc().getRow()) && (mCol < getGrid().getYou().getLoc().getCol())){
 				if (!getGrid().getActorName(dr).equals("Mho")){
 					mhoNextLoc = dr;
 				}
 			}
-			if((mRow > row) && (mCol < col)){
+			if((mRow > getGrid().getYou().getLoc().getRow()) && (mCol < getGrid().getYou().getLoc().getCol())){
 				if (!getGrid().getActorName(ur).equals("Mho")){
 					mhoNextLoc = ur;
 				}
 			}
-			if ((mRow < row) && (mCol > col)){
+			if ((mRow < getGrid().getYou().getLoc().getRow()) && (mCol > getGrid().getYou().getLoc().getCol())){
 				if (!getGrid().getActorName(dl).equals("Mho")){
 					mhoNextLoc = dl;
 				}
 			}
-			if ((mRow > row) && (mCol > col)){
+			if ((mRow > getGrid().getYou().getLoc().getRow()) && (mCol > getGrid().getYou().getLoc().getCol())){
 				if (!getGrid().getActorName(ul).equals("Mho")){
 					mhoNextLoc = ul;
 				}
@@ -93,26 +87,26 @@ public class Mho extends Actor {
 		}
 
 		//horizontal is greater than vertical
-		if (Math.abs(col - mCol) > Math.abs(row - mRow)){
-			if(mCol > col){
+		if (Math.abs(getGrid().getYou().getLoc().getCol() - mCol) > Math.abs(getGrid().getYou().getLoc().getRow() - mRow)){
+			if(mCol > getGrid().getYou().getLoc().getCol()){
 				if (!getGrid().getActorName(l).equals("Mho")){
 					mhoNextLoc = l;
 				}
 			}
-			if(mCol < col){
+			if(mCol < getGrid().getYou().getLoc().getCol()){
 				if (!getGrid().getActorName(r).equals("Mho")){
 					mhoNextLoc = r;
 				}
 			}
 
 			//vertical is greater than horizontal
-			if (Math.abs(col - mCol) < Math.abs(row - mRow)){
-				if(mRow > row){
+			if (Math.abs(getGrid().getYou().getLoc().getCol() - mCol) < Math.abs(getGrid().getYou().getLoc().getRow() - mRow)){
+				if(mRow > getGrid().getYou().getLoc().getRow()){
 					if (!getGrid().getActorName(u).equals("Mho")){
 						mhoNextLoc = u;
 					}
 				}
-				if(mRow < row){
+				if(mRow < getGrid().getYou().getLoc().getRow()){
 					if (!getGrid().getActorName(d).equals("Mho")){
 						mhoNextLoc = d;
 					}
