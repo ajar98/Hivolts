@@ -22,9 +22,9 @@ public class You extends Actor {
 		}
 	}
 	
-	public boolean checkIfDead() {
+	/* public boolean checkIfDead() {
 		return death;
-	}
+	} */
 
 	public Location jump() {
 		ArrayList<Location> jumpLocs = new ArrayList<Location>();
