@@ -10,10 +10,20 @@ import javax.swing.JOptionPane;
 public class You extends Actor {
 
 	Grid g = super.getGrid();
+	boolean death = false;
 
 	public You(Location loc, Grid gr) {
 		super(loc, gr, "You");
-		drawYou(this);
+		if (gr.isValid(loc))
+			drawYou(this);
+		else {
+			drawYou(this);
+			death = true;
+		}
+	}
+	
+	public boolean checkIfDead() {
+		return death;
 	}
 
 	public Location jump() {
