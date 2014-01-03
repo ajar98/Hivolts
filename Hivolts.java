@@ -39,14 +39,18 @@ public class Hivolts extends JApplet implements KeyListener {
 		int height = getHeight();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, width, height);
-		if (width > (int) (height / 1.1)) { // horizontal too large
-			playHivolts((int) (height / 1.1), height, g);
-		} else if (height > (int) (width * 1.1)) { // vertical too large
-			playHivolts(width, (int) (width * 1.1), g);
-		} else {
-			playHivolts(width, height, g);
+		if (finished) {
+			System.exit(0);
 		}
-
+		else {
+			if (width > (int) (height / 1.1)) { // horizontal too large
+				playHivolts((int) (height / 1.1), height, g);
+			} else if (height > (int) (width * 1.1)) { // vertical too large
+				playHivolts(width, (int) (width * 1.1), g);
+			} else {
+				playHivolts(width, height, g);
+			}
+		}
 	}
 
 	public void playHivolts(int width, int height, Graphics g) {
@@ -60,16 +64,15 @@ public class Hivolts extends JApplet implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (gr.getYou().checkIfDead()) {
+		/* if (gr.getYou().checkIfDead()) {
 			int again = JOptionPane.showConfirmDialog(null, "Would you like to play again?");
 			if (again == 0) {
 				init();
 			} else {
 				finished = true;
 			}
-		}
-		if (!finished) {
-			switch(e.getKeyChar()) {
+		} */
+		switch(e.getKeyChar()) {
 			case 'j':
 				youLoc = gr.getYou().jump();
 				repaint();
@@ -109,28 +112,24 @@ public class Hivolts extends JApplet implements KeyListener {
 				repaint();
 				break;
 			case 'c':
-				youLoc = gr.getYou().adjacentLocations().get(4);
+				youLoc = gr.getYou().adjacentLocations().get(3);
 				repaint();
 				moveMhos();
 				repaint();
 				break;
 			case 'x':
-				youLoc = gr.getYou().adjacentLocations().get(5);
+				youLoc = gr.getYou().adjacentLocations().get(4);
 				repaint();
 				moveMhos();
 				repaint();
 				break;
 			case 'z':
-				youLoc = gr.getYou().adjacentLocations().get(6);
+				youLoc = gr.getYou().adjacentLocations().get(5);
 				repaint();
 				moveMhos();
 				repaint();
 				break;
-			}
-		} else {
-			stop();
 		}
-		
 
 	}
 
