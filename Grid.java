@@ -60,7 +60,7 @@ public class Grid {
 
 	public boolean isValid(Location loc) {
 		boolean validity;
-		if (actors2[loc.getCol()][loc.getRow()].equals("null"))
+		if ((actors2[loc.getCol()][loc.getRow()].equals("null")) || (actors2[loc.getCol()][loc.getRow()].equals("you")))
 			validity = true;
 		else
 			validity = false;
@@ -111,7 +111,7 @@ public class Grid {
 	}
 	
 	void drawGrid() {
-		int offset = (int) ((gridWidth - 13)/14);
+		int offset = getCellDim();
 		int cell_width = offset;
 		int cell_height = offset;
 		antiAlias();
