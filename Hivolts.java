@@ -13,13 +13,14 @@ import javax.swing.JOptionPane;
 
 public class Hivolts extends JApplet implements KeyListener {
 
-	boolean finished = false;
 	Grid gr;
 	String size;
 	String[][] actorNames;
 	ArrayList<Location> fencePlaces;
 	ArrayList<Location> mhoPlaces;
 	Location youLoc;
+	Graphics graphics;
+	boolean finished = false;
 
 	public Hivolts() { }
 
@@ -34,15 +35,12 @@ public class Hivolts extends JApplet implements KeyListener {
 	}
 
 	public void paint(Graphics g) {
-		Graphics2D graphics = (Graphics2D) g;
+		graphics = g;
 		int width = getWidth();
 		int height = getHeight();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, width, height);
-		if (finished) {
-			System.exit(0);
-		}
-		else {
+		if (!finished || !gr.getFinished()) {
 			if (width > (int) (height / 1.1)) { // horizontal too large
 				playHivolts((int) (height / 1.1), height, g);
 			} else if (height > (int) (width * 1.1)) { // vertical too large
@@ -51,27 +49,25 @@ public class Hivolts extends JApplet implements KeyListener {
 				playHivolts(width, height, g);
 			}
 		}
+		else if (finished || gr.getFinished()) {
+			int again = JOptionPane.showConfirmDialog(null, "Would you like to play again?");
+			if (again == 0) {
+				gr.setFinished();
+				init();
+			} else {
+				System.exit(0);
+			}
+		} 
 	}
 
 	public void playHivolts(int width, int height, Graphics g) {
 		gr = new Grid(width, height, g, fencePlaces, mhoPlaces, youLoc, actorNames);
 		gr.drawGrid();
-		// while (finished != true) {
-		// play game
-		// }
 	}
 
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		/* if (gr.getYou().checkIfDead()) {
-			int again = JOptionPane.showConfirmDialog(null, "Would you like to play again?");
-			if (again == 0) {
-				init();
-			} else {
-				finished = true;
-			}
-		} */
 		switch(e.getKeyChar()) {
 			case 'j':
 				youLoc = gr.getYou().jump();
