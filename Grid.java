@@ -73,17 +73,6 @@ public class Grid {
 
 	public String[][] getActorNameArray() {
 		return actors2;
-	}
-
-	public Location getYouLoc() {
-		Location youLoc = new Location (-1, -1);
-		for (int i = 0; i < 12; i++) {
-			for (int j = 0; j < 12; j++) {
-				if (actors2[i][j].equalsIgnoreCase("You"))
-					youLoc = new Location(i, j);
-			}
-		}
-		return youLoc;
 	}  
 
 	public ArrayList<Mho> getMhoLocs() {
