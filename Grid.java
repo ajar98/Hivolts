@@ -195,8 +195,4 @@ public class Grid {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
 
-	public void setFinished() {
-		finished = !finished;
-	}
-
 } 
