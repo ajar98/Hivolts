@@ -1,7 +1,6 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ public class Hivolts extends JApplet implements KeyListener {
 	ArrayList<Location> mhoPlaces;
 	Location youLoc;
 	Graphics graphics;
-	boolean finished = false;
 
 	public Hivolts() { }
 
@@ -40,31 +38,35 @@ public class Hivolts extends JApplet implements KeyListener {
 		int height = getHeight();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, width, height);
-		if (!finished || !gr.getFinished()) {
-			if (width > (int) (height / 1.1)) { // horizontal too large
-				playHivolts((int) (height / 1.1), height, g);
-			} else if (height > (int) (width * 1.1)) { // vertical too large
-				playHivolts(width, (int) (width * 1.1), g);
-			} else {
-				playHivolts(width, height, g);
-			}
-		}
-		else if (finished || gr.getFinished()) {
-			int again = JOptionPane.showConfirmDialog(null, "Would you like to play again?");
-			if (again == 0) {
-				gr.setFinished();
-				init();
-			} else {
-				System.exit(0);
-			}
+		if (width > (int) (height / 1.1)) { // horizontal too large
+			playHivolts((int) (height / 1.1), height, g);
+		} else if (height > (int) (width * 1.1)) { // vertical too large
+			playHivolts(width, (int) (width * 1.1), g);
+		} else {
+			playHivolts(width, height, g);
 		} 
 	}
 
 	public void playHivolts(int width, int height, Graphics g) {
 		gr = new Grid(width, height, g, fencePlaces, mhoPlaces, youLoc, actorNames);
 		gr.drawGrid();
+		if (!gr.checkIfYou()) {
+			int again;
+			again = JOptionPane.showConfirmDialog(null, "Would you like to play again?");
+			if (again != 0) {
+				System.exit(0);
+			}
+		}
 	}
-
+	
+	public String printBool(boolean b) {
+		if (b) return "true";
+		else return "false";
+	}
+	
+	public void appletPrint(String s) {
+		JOptionPane.showMessageDialog(null, s);
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -176,7 +178,7 @@ public class Hivolts extends JApplet implements KeyListener {
 	public ArrayList<Location> possibleMhoPlaces() {
 		ArrayList<Location> possibleMhoPlaces = new ArrayList<Location>();
 		for (Location loc : possibleFencePlaces()) {
-			if (isValid(loc)) {
+			if (actorNames[loc.getCol()][loc.getRow()].equals("null")) {
 				possibleMhoPlaces.add(loc);
 			}
 		}
@@ -214,7 +216,7 @@ public class Hivolts extends JApplet implements KeyListener {
 	
 	public boolean isValid(Location loc) {
 		boolean validity;
-		if ((actorNames[loc.getCol()][loc.getRow()].equals("null")) || (actorNames[loc.getCol()][loc.getRow()].equals("you")))
+		if ((actorNames[loc.getCol()][loc.getRow()].equals("null")))
 			validity = true;
 		else
 			validity = false;
@@ -223,11 +225,24 @@ public class Hivolts extends JApplet implements KeyListener {
 	
 	public void moveMhos() {
 		for (int i = 0; i < mhoPlaces.size(); i++) {
-			mhoPlaces.set(i, (new Mho(mhoPlaces.get(i), gr)).nextMove());
+			if (gr.isValid((new Mho(mhoPlaces.get(i), gr).nextMove()))) {
+				mhoPlaces.set(i, (new Mho(mhoPlaces.get(i), gr)).nextMove());
+			} else {
+				mhoPlaces.remove(i);
+			}
+		}
+		if (mhoPlaces.isEmpty()) {
+			int again = JOptionPane.showConfirmDialog(null, "You have won! Play again?");
+			if (again == 0) {
+				init();
+			} else {
+				System.exit(0);
+			}
 		}
 	}
 	       
-
+	
+	
 }
 
 
