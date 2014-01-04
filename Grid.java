@@ -157,17 +157,5 @@ public class Grid {
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, // anti aliasing
 				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
-	
-	public boolean checkIfYou() {
-		boolean ans = false;
-		for (int i = 0; i < 12; i++) {
-			for (int j = 0; j < 12; j++) {
-				if (actors2[i][j].equals("You")) {
-					ans = true;
-				}
-			}
-		}
-		return ans;
-	}
 
 } 
