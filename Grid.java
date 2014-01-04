@@ -3,24 +3,15 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 public class Grid {
 
-	String[][] actors2 = new String[12][12];
+	String[][] actors2;
 	private final int ROWS = 12;
 	private final int COLS = 12;
 	private int gridWidth;
 	private int gridHeight;
-	private boolean finished = false;
 	You you;
 	Graphics2D g;
 	ArrayList<Location> fencePlaces = new ArrayList<Location>();
@@ -36,31 +27,14 @@ public class Grid {
 		youLoc = youLocation;
 		actors2 = actorNames;
 	}
-	
-	public void printArrayList(ArrayList<Location> locs) {
-		String ans = "[";
-		for (Location loc : locs) {
-			ans += loc.printLoc() + ", ";
-		}
-		ans += "]";
-		JOptionPane.showMessageDialog(null, ans);
-	}
 
 	public Graphics getGraphics() {
 		return g;
 	}
 
-	void initActorNameArray() {
-		for (int i = 0; i < 12; i++) {
-			for (int j = 0; j < 12; j++) {
-				actors2[i][j] = "null";
-			}
-		}
-	}
-
 	public boolean isValid(Location loc) {
 		boolean validity;
-		if ((actors2[loc.getCol()][loc.getRow()].equals("null")) || (actors2[loc.getCol()][loc.getRow()].equals("you")))
+		if ((actors2[loc.getCol()][loc.getRow()].equals("null")) || (actors2[loc.getCol()][loc.getRow()].equals("You")))
 			validity = true;
 		else
 			validity = false;
@@ -121,8 +95,8 @@ public class Grid {
 		g.setFont(Hivolts);
 		g.drawString("HIVOLTS",(int) (offset * 5.3), gridHeight - offset);
 		placeFences();
-		placeMhos();
 		placeYou();
+		placeMhos();
 	}
 
 	public int getCellDim() {
@@ -184,12 +158,16 @@ public class Grid {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
 	
-	public boolean getFinished() {
-		return finished;
-	}
-	
-	public void setFinished() {
-		finished = !finished;
+	public boolean checkIfYou() {
+		boolean ans = false;
+		for (int i = 0; i < 12; i++) {
+			for (int j = 0; j < 12; j++) {
+				if (actors2[i][j].equals("You")) {
+					ans = true;
+				}
+			}
+		}
+		return ans;
 	}
 
 } 
