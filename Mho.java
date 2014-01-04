@@ -26,7 +26,6 @@ public class Mho extends Actor {
 
 	public Mho(Location loc, Grid gr) {
 		super(loc, gr, "Mho");
-		drawMho();
 	}
 
 	public Location nextMove(){
@@ -118,22 +117,21 @@ public class Mho extends Actor {
 		return mhoNextLoc;
 
 	}
-
-	public void drawMho(){
+	
+	public void draw(String imageName) {
 		int width = getGrid().getCellDim() -1;
 		int height = getGrid().getCellDim() -1;
 		BufferedImage image = null;
 		try
 		{
-			image = ImageIO.read(new File("Mho.jpg"));
+			image = ImageIO.read(new File(imageName));
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Mho.jpg not working because " + e);
+			JOptionPane.showMessageDialog(null, imageName + " not working because " + e);
 		}
 
 		getGrid().getGraphics().drawImage(image, getGrid().pixelLoc(getLoc()).getCol() + 1, getGrid().pixelLoc(getLoc()).getRow() + 1, width, height, null);
-
 	}
 
 }
