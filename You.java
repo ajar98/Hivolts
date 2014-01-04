@@ -1,10 +1,5 @@
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 
 public class You extends Actor {
