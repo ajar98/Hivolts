@@ -1,11 +1,3 @@
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
-
-
 public class Mho extends Actor {
 	Location loc;
 
@@ -116,22 +108,6 @@ public class Mho extends Actor {
 		}
 		return mhoNextLoc;
 
-	}
-	
-	public void draw(String imageName) {
-		int width = getGrid().getCellDim() -1;
-		int height = getGrid().getCellDim() -1;
-		BufferedImage image = null;
-		try
-		{
-			image = ImageIO.read(new File(imageName));
-		}
-		catch(Exception e)
-		{
-			JOptionPane.showMessageDialog(null, imageName + " not working because " + e);
-		}
-
-		getGrid().getGraphics().drawImage(image, getGrid().pixelLoc(getLoc()).getCol() + 1, getGrid().pixelLoc(getLoc()).getRow() + 1, width, height, null);
 	}
 
 }
