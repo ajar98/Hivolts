@@ -7,8 +7,6 @@ import javax.swing.JOptionPane;
 public class Actor {
 
 	private Location actorLoc;
-	private int actorCol;
-	private int actorRow;
 	private final Grid g;
 	public String actorName;
 
@@ -16,20 +14,12 @@ public class Actor {
 		actorLoc = loc;
 		g = gr;
 		actorName = name;
-		if (!name.equals("you")) gr.putActor(this);
 		draw(name + ".jpg");
+		gr.putActor(this);
 	}
 
 	public String getName() {
 		return actorName;
-	}
-
-	public void setCol(int col) {
-		actorCol = col;
-	}
-
-	public void setRow(int row) {
-		actorRow = row;
 	}
 
 	public void setLoc(Location loc) {
