@@ -14,12 +14,6 @@ public class You extends Actor {
 
 	public You(Location loc, Grid gr) {
 		super(loc, gr, "You");
-		if (gr.isValid(loc))
-			drawYou(this);
-		else {
-			drawYou(this);
-			gr.setFinished();
-		}
 	}
 
 	public Location jump() {
@@ -48,22 +42,6 @@ public class You extends Actor {
 		adjacentLocations.add(new Location(youLoc.getCol() - 1, youLoc.getRow())); // left
 		adjacentLocations.add(new Location(youLoc.getCol() - 1, youLoc.getRow() - 1)); // up left
 		return adjacentLocations;
-	}
-
-	public void drawYou(You you) {
-		int width = getGrid().getCellDim() - 1;
-		int height = getGrid().getCellDim() - 1;
-		BufferedImage image = null;
-		try
-		{
-			image = ImageIO.read(new File("You.jpg"));
-		}
-		catch (Exception e) 
-		{
-			JOptionPane.showMessageDialog(null, "You.jpg not working because " + e);
-		}
-		getGrid().getGraphics().drawImage(image, getGrid().pixelLoc(getLoc()).getCol() + 1, getGrid().pixelLoc(getLoc()).getRow() + 1, width, height, null);
-
 	}
 
 }
