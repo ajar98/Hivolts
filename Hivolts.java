@@ -50,11 +50,13 @@ public class Hivolts extends JApplet implements KeyListener {
 	public void playHivolts(int width, int height, Graphics g) {
 		gr = new Grid(width, height, g, fencePlaces, mhoPlaces, youLoc, actorNames);
 		gr.drawGrid();
-		if (!gr.checkIfYou()) {
+		if (!gr.getActorName(gr.getYou().getLoc()).equals("You")) {
 			int again;
 			again = JOptionPane.showConfirmDialog(null, "Would you like to play again?");
 			if (again != 0) {
 				System.exit(0);
+			} else {
+				init();
 			}
 		}
 	}
