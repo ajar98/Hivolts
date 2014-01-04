@@ -1,3 +1,7 @@
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 public class Actor {
@@ -13,6 +17,7 @@ public class Actor {
 		g = gr;
 		actorName = name;
 		if (!name.equals("you")) gr.putActor(this);
+		draw(name + ".jpg");
 	}
 
 	public String getName() {
@@ -37,6 +42,22 @@ public class Actor {
 
 	public Grid getGrid() {
 		return g;
+	}
+	
+	public void draw(String imageName) {
+		int width = getGrid().getCellDim() -1;
+		int height = getGrid().getCellDim() -1;
+		BufferedImage image = null;
+		try
+		{
+			image = ImageIO.read(new File(imageName));
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, imageName + " not working because " + e);
+		}
+
+		getGrid().getGraphics().drawImage(image, getGrid().pixelLoc(getLoc()).getCol() + 1, getGrid().pixelLoc(getLoc()).getRow() + 1, width, height, null);
 	}
 
 }
