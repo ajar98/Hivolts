@@ -5,12 +5,17 @@ import java.util.Random;
 public class You extends Actor {
 
 	Grid g = super.getGrid();
-	boolean death = false;
 
 	public You(Location loc, Grid gr) {
 		super(loc, gr, "You");
 	}
 
+	/**
+	 * First, function gets all locations that aren't fences (placed in an ArrayList)
+	 * Next, function chooses one locations randomly
+	 * @return location of the jump
+	 */
+	
 	public Location jump() {
 		ArrayList<Location> jumpLocs = new ArrayList<Location>();
 		for (int i = 0; i < 12; i++) {
