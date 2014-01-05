@@ -32,6 +32,12 @@ public class Grid {
 		return g;
 	}
 
+	/**
+	 * Checks if null or You so that the Location of you doesn't make itself invalid
+	 * @param loc is the location whose validity is in question
+	 * @return validity (see Hivolts.isValid)
+	 */
+	
 	public boolean isValid(Location loc) {
 		boolean validity;
 		if ((actors2[loc.getCol()][loc.getRow()].equals("null")) || (actors2[loc.getCol()][loc.getRow()].equals("You")))
@@ -40,6 +46,11 @@ public class Grid {
 			validity = false;
 		return validity;
 	}
+	
+	/**
+	 * Adds Actor.getName() to the actor's name array
+	 * @param a is the Actor
+	 */
 
 	public void putActor(Actor a) {
 		actors2[a.getLoc().getCol()][a.getLoc().getRow()] = a.getName();
@@ -73,6 +84,10 @@ public class Grid {
 		return actorName;
 	}
 	
+	/**
+	 * Places you first so that the fences and mhos overwrite You in Grid and actor name array
+	 */
+	
 	void drawGrid() {
 		int offset = getCellDim();
 		int cell_width = offset;
@@ -94,9 +109,9 @@ public class Grid {
 		Font Hivolts = new Font("TimesRoman", Font.BOLD, offset);
 		g.setFont(Hivolts);
 		g.drawString("HIVOLTS",(int) (offset * 5.3), gridHeight - offset);
-		placeFences();
 		placeYou();
 		placeMhos();
+		placeFences();
 	}
 
 	public int getCellDim() {
@@ -132,6 +147,10 @@ public class Grid {
 		return you;
 	}
 
+	/**
+	 * @return ArrayList<Location> of the border of the grid
+	 */
+	
 	public ArrayList<Location> allAround() {
 		ArrayList<Location> allAround = new ArrayList<Location>();
 		for (int i = 0; i < 12; i++) {
@@ -143,13 +162,18 @@ public class Grid {
 		return allAround;
 	}
 	
+	/**
+	 * @param loc is the location on the Grid
+	 * @return location of the pixels in the Applet
+	 */
+	
 	public Location pixelLoc(Location loc) {
 		Location pixelLoc;
 		int row = loc.getRow();
 		int col = loc.getCol();
 		int offset = getCellDim();
 		int celldim = getCellDim();
-		pixelLoc = new Location(offset + (col * (celldim + 1)), offset + (row * (celldim + 1)));
+		pixelLoc = new Location(offset + (col * (celldim + 1)), offset + (row * (celldim + 1))); // must offset one so drawing starts in the right places
 		return pixelLoc;
 	}
 
@@ -157,5 +181,4 @@ public class Grid {
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, // anti aliasing
 				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
-
 } 
