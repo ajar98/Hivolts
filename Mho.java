@@ -1,7 +1,7 @@
 public class Mho extends Actor {
 	Location loc;
 
-	// Mho getGrid().getYou().getLoc().getRow()s/getGrid().getYou().getLoc().getCol()umns
+	// Mho youRows/youColumns
 	int mRow = getLoc().getRow();
 	int mCol = getLoc().getCol();
 
@@ -21,14 +21,19 @@ public class Mho extends Actor {
 	}
 
 	public Location nextMove(){
-		Location mhoNextLoc = c;
-		// in the same getGrid().getYou().getLoc().getRow()
-		if (getGrid().getYou().getLoc().getRow() == mRow){
-			if (getGrid().getYou().getLoc().getCol() < mCol){
+		Location mhoNextLoc = new Location(-1, -1);
+		Location youLoc = getGrid().getYou().getLoc();
+		int youRow = youLoc.getRow();
+		int youCol = youLoc.getCol();
+		// in the same youRow
+		if (youRow == mRow){
+			// Mho is to the right of You
+			if (youCol < mCol){
 				if (!getGrid().getActorName(l).equals("Mho")){
 					mhoNextLoc = l;
 				}
 			}
+			// Mho is to the left of You
 			else {
 				if (!getGrid().getActorName(r).equals("Mho")){
 					mhoNextLoc = r;
@@ -36,13 +41,15 @@ public class Mho extends Actor {
 			}
 		}
 
-		//in the same getGrid().getYou().getLoc().getCol()
-		if (getGrid().getYou().getLoc().getCol() == mCol){
-			if (getGrid().getYou().getLoc().getRow() < mRow){
+		//in the same youCol
+		if (youCol == mCol){
+			// Mho is below you
+			if (youRow < mRow){
 				if (!getGrid().getActorName(u).equals("Mho")){
 					mhoNextLoc = u;
 				}
 			}
+			// Mho is above you
 			else{
 				if (!getGrid().getActorName(d).equals("Mho")){
 					mhoNextLoc = d;
@@ -53,23 +60,27 @@ public class Mho extends Actor {
 
 
 		//in the same diagonal
-		if (Math.abs(getGrid().getYou().getLoc().getRow() - mRow) == Math.abs(getGrid().getYou().getLoc().getCol() - mCol)){
-			if((mRow < getGrid().getYou().getLoc().getRow()) && (mCol < getGrid().getYou().getLoc().getCol())){
+		if (Math.abs(youRow - mRow) == Math.abs(youCol - mCol)){
+			// mho is up and left
+			if((mRow < youRow) && (mCol < youCol)){
 				if (!getGrid().getActorName(dr).equals("Mho")){
 					mhoNextLoc = dr;
 				}
 			}
-			if((mRow > getGrid().getYou().getLoc().getRow()) && (mCol < getGrid().getYou().getLoc().getCol())){
+			// mho is down and left
+			if((mRow > youRow) && (mCol < youCol)){
 				if (!getGrid().getActorName(ur).equals("Mho")){
 					mhoNextLoc = ur;
 				}
 			}
-			if ((mRow < getGrid().getYou().getLoc().getRow()) && (mCol > getGrid().getYou().getLoc().getCol())){
+			// mho is up and right
+			if ((mRow < youRow) && (mCol > youCol)){
 				if (!getGrid().getActorName(dl).equals("Mho")){
 					mhoNextLoc = dl;
 				}
 			}
-			if ((mRow > getGrid().getYou().getLoc().getRow()) && (mCol > getGrid().getYou().getLoc().getCol())){
+			// mho is down and right
+			if ((mRow > youRow) && (mCol > youCol)){
 				if (!getGrid().getActorName(ul).equals("Mho")){
 					mhoNextLoc = ul;
 				}
@@ -78,26 +89,30 @@ public class Mho extends Actor {
 		}
 
 		//horizontal is greater than vertical
-		if (Math.abs(getGrid().getYou().getLoc().getCol() - mCol) > Math.abs(getGrid().getYou().getLoc().getRow() - mRow)){
-			if(mCol > getGrid().getYou().getLoc().getCol()){
+		if (Math.abs(youCol - mCol) > Math.abs(youRow - mRow)){
+			// Mho is to the right of you
+			if(mCol > youCol){
 				if (!getGrid().getActorName(l).equals("Mho")){
 					mhoNextLoc = l;
 				}
 			}
-			if(mCol < getGrid().getYou().getLoc().getCol()){
+			//Mho is to the left of you
+			if(mCol < youCol){
 				if (!getGrid().getActorName(r).equals("Mho")){
 					mhoNextLoc = r;
 				}
 			}
 
 			//vertical is greater than horizontal
-			if (Math.abs(getGrid().getYou().getLoc().getCol() - mCol) < Math.abs(getGrid().getYou().getLoc().getRow() - mRow)){
-				if(mRow > getGrid().getYou().getLoc().getRow()){
+			if (Math.abs(youCol - mCol) < Math.abs(youRow - mRow)){
+				// Mho is below you
+				if(mRow > youRow){
 					if (!getGrid().getActorName(u).equals("Mho")){
 						mhoNextLoc = u;
 					}
 				}
-				if(mRow < getGrid().getYou().getLoc().getRow()){
+				// Mho is above you
+				if(mRow < youRow){
 					if (!getGrid().getActorName(d).equals("Mho")){
 						mhoNextLoc = d;
 					}
@@ -111,5 +126,4 @@ public class Mho extends Actor {
 	}
 
 }
-
 
