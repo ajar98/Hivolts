@@ -40,6 +40,7 @@ public class Hivolts extends JApplet implements KeyListener {
 	 */
 	
 	public Hivolts() { 
+		sayInstructions();
 		fenceInput = JOptionPane.showInputDialog(null, "How many fences on the interior? Enter 'default' for the default values.");
 		if (fenceInput.equals("default")) {
 			fenceNum = 20;
@@ -65,12 +66,12 @@ public class Hivolts extends JApplet implements KeyListener {
 		addKeyListener(this);
 		setFocusable(true);
 		setSize(600, 660);
-		try {
+		/* try {
 			clip = Applet.newAudioClip(new URL(getCodeBase(), "Applause.mp3"));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} */
 		actorNames = initActorArray();
 		fencePlaces = initFencePlaces();
 		mhoPlaces = initMhoPlaces();
@@ -112,6 +113,15 @@ public class Hivolts extends JApplet implements KeyListener {
 		r.setBounds(75, 550, 100, 36);
 		add(r);
 		r.setVisible(true); */ 
+		if (mhoPlaces.isEmpty()) {
+			// clip.play();
+			int again = JOptionPane.showConfirmDialog(null, "You have won! Play again?");
+			if (again == 0) {
+				init();
+			} else {
+				System.exit(0);
+			}
+		} 
 		if (!gr.getActorName(gr.getYou().getLoc()).equals("You")) {
 			int again;
 			again = JOptionPane.showConfirmDialog(null, "Would you like to play again?");
@@ -145,49 +155,41 @@ public class Hivolts extends JApplet implements KeyListener {
 				break;
 			case 'q': // You moves northwest
 				youLoc = gr.getYou().adjacentLocations().get(7);
-				repaint();
 				moveMhos();
 				repaint();
 				break;
 			case 'w': // You moves north
 				youLoc = gr.getYou().adjacentLocations().get(0);
-				repaint();
 				moveMhos();
 				repaint();
 				break;
 			case 'e': // You moves northeast
 				youLoc = gr.getYou().adjacentLocations().get(1);
-				repaint();
 				moveMhos();
 				repaint();
 				break;
 			case 'd': // You moves east
 				youLoc = gr.getYou().adjacentLocations().get(2);
-				repaint();
 				moveMhos();
 				repaint();
 				break;
 			case 'a': // You moves west
 				youLoc = gr.getYou().adjacentLocations().get(6);
-				repaint();
 				moveMhos();
 				repaint();
 				break;
 			case 'c': // You moves southeast
 				youLoc = gr.getYou().adjacentLocations().get(3);
-				repaint();
 				moveMhos();
 				repaint();
 				break;
 			case 'x': // You moves south
 				youLoc = gr.getYou().adjacentLocations().get(4);
-				repaint();
 				moveMhos();
 				repaint();
 				break;
 			case 'z': // You moves southwest
 				youLoc = gr.getYou().adjacentLocations().get(5);
-				repaint();
 				moveMhos();
 				repaint();
 				break;
@@ -325,15 +327,15 @@ public class Hivolts extends JApplet implements KeyListener {
 				mhoPlaces.remove(i);
 			}
 		}
-		if (mhoPlaces.isEmpty()) {
-			clip.play();
-			int again = JOptionPane.showConfirmDialog(null, "You have won! Play again?");
-			if (again == 0) {
-				init();
-			} else {
-				System.exit(0);
-			}
-		}
+	}
+	
+	public void sayInstructions() {
+		appletPrint("Welcome to Hivolts!");
+		appletPrint("This game is from the early PLATO system developed in the 1970s.");
+		appletPrint("The object of the game is to kill the moving mhos by causing them to fall on electric fences.");
+		appletPrint("However, if a mho moves onto you or you move onto a fence or mho, you lose!");
+		appletPrint("Controls:\nQ - Move up and to the left\nW - Move up\nE - up and to the right\nD - to the right\nC - down and to the right\nX - down\nZ - down and to the left\nA - to the left\nS - don't move\nJ - jump to a random square that isn't a fence.");
+		JOptionPane.showConfirmDialog(null, "Ready to play?");
 	}
 	       
 	/* private class ReplotButton extends JButton implements ActionListener {
