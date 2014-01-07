@@ -65,25 +65,41 @@ public class Mho extends Actor {
 					// mho is up and left
 					if((mRow < youRow) && (mCol < youCol)){
 						if (!getGrid().getActorName(dr).equals("Mho")){
-							mhoNextLoc = dr;
+							if (getGrid().getActorName(dr).equals("Fence") && (lookCounter == 0)) {
+								lookCounter++;
+							} else {
+								mhoNextLoc = dr;
+							}
 						}
 					}
 					// mho is down and left
 					if((mRow > youRow) && (mCol < youCol)){
 						if (!getGrid().getActorName(ur).equals("Mho")){
-							mhoNextLoc = ur;
+							if (getGrid().getActorName(ur).equals("Fence") && (lookCounter == 0)) {
+								lookCounter++;
+							} else {
+								mhoNextLoc = ur;
+							}
 						}
 					}
 					// mho is up and right
 					if ((mRow < youRow) && (mCol > youCol)){
 						if (!getGrid().getActorName(dl).equals("Mho")){
-							mhoNextLoc = dl;
+							if (getGrid().getActorName(dl).equals("Fence") && (lookCounter == 0)) {
+								lookCounter++;
+							} else {
+								mhoNextLoc = dl;
+							}
 						}
 					}
 					// mho is down and right
 					if ((mRow > youRow) && (mCol > youCol)){
 						if (!getGrid().getActorName(ul).equals("Mho")){
-							mhoNextLoc = ul;
+							if (getGrid().getActorName(ul).equals("Fence") && (lookCounter == 0)) {
+								lookCounter++;
+							} else {
+								mhoNextLoc = ul;
+							}
 						}
 					}
 
