@@ -40,18 +40,6 @@ public class Hivolts extends JApplet implements KeyListener {
 	
 	public Hivolts() { 
 		sayInstructions();
-		fenceInput = JOptionPane.showInputDialog(null, "How many fences on the interior? Press enter for the default values.");
-		if (fenceInput.equals("")) {
-			fenceNum = 20;
-		} else {
-			fenceNum = Integer.parseInt(fenceInput);
-		}
-		mhoInput = JOptionPane.showInputDialog(null, "How many mhos on the interior? Press enter for the default values.");
-		if (mhoInput.equals("")) {
-			mhoNum = 12;
-		} else {
-			mhoNum = Integer.parseInt(mhoInput);
-		}
 	}
 	
 	/**
@@ -71,6 +59,18 @@ public class Hivolts extends JApplet implements KeyListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} */
+		fenceInput = JOptionPane.showInputDialog(null, "How many fences on the interior? Press enter for the default values.");
+		if (fenceInput.equals("")) {
+			fenceNum = 20;
+		} else {
+			fenceNum = Integer.parseInt(fenceInput);
+		}
+		mhoInput = JOptionPane.showInputDialog(null, "How many mhos on the interior? Press enter for the default values.");
+		if (mhoInput.equals("")) {
+			mhoNum = 12;
+		} else {
+			mhoNum = Integer.parseInt(mhoInput);
+		}
 		actorNames = initActorArray();
 		fencePlaces = initFencePlaces();
 		mhoPlaces = initMhoPlaces();
