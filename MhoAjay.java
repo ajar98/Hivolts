@@ -6,7 +6,7 @@ public class Mho extends Actor {
 	// Mho youRows/youColumns
 	int mRow = getLoc().getRow();
 	int mCol = getLoc().getCol();
-	int lookCounter = 0;
+	int lookCounter;
 
 	// Mho possible positions
 	Location c = (new Location ((mCol), (mRow)));           //current position
@@ -24,6 +24,7 @@ public class Mho extends Actor {
 	}
 
 	public Location nextMove(){
+		lookCounter = 0;
 		Location mhoNextLoc = c;
 		Location youLoc = getGrid().getYou().getLoc();
 		int youRow = youLoc.getRow();
@@ -160,7 +161,7 @@ public class Mho extends Actor {
 				}
 
 				//vertical is greater than horizontal
-				else if (Math.abs(youCol - mCol) < Math.abs(youRow - mRow)){
+				else {
 					// Mho is below you
 					if (mRow > youRow){
 						if (!getGrid().getActorName(u).equals("Mho")) {
@@ -199,6 +200,7 @@ public class Mho extends Actor {
 
 		}
 		lookCounter = 0;
+		JOptionPane.showMessageDialog(null, "I am at " + getLoc().printLoc() + " and am going to " + mhoNextLoc.printLoc());
 		return mhoNextLoc;
 
 	}
