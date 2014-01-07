@@ -1,4 +1,3 @@
-
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.Color;
@@ -41,14 +40,14 @@ public class Hivolts extends JApplet implements KeyListener {
 	
 	public Hivolts() { 
 		sayInstructions();
-		fenceInput = JOptionPane.showInputDialog(null, "How many fences on the interior? Enter 'default' for the default values.");
-		if (fenceInput.equals("default")) {
+		fenceInput = JOptionPane.showInputDialog(null, "How many fences on the interior? Press enter for the default values.");
+		if (fenceInput.equals("")) {
 			fenceNum = 20;
 		} else {
 			fenceNum = Integer.parseInt(fenceInput);
 		}
-		mhoInput = JOptionPane.showInputDialog(null, "How many mhos on the interior? Enter 'default' for the default values.");
-		if (mhoInput.equals("default")) {
+		mhoInput = JOptionPane.showInputDialog(null, "How many mhos on the interior? Press enter for the default values.");
+		if (mhoInput.equals("")) {
 			mhoNum = 12;
 		} else {
 			mhoNum = Integer.parseInt(mhoInput);
@@ -321,7 +320,7 @@ public class Hivolts extends JApplet implements KeyListener {
 	
 	public void moveMhos() {
 		for (int i = 0; i < mhoPlaces.size(); i++) {
-			if (gr.isValid((new Mho(mhoPlaces.get(i), gr).nextMove()))) {
+			if (!gr.getActorName((new Mho(mhoPlaces.get(i), gr)).nextMove()).equals("Fence")) {
 				mhoPlaces.set(i, (new Mho(mhoPlaces.get(i), gr)).nextMove());
 			} else {
 				mhoPlaces.remove(i);
