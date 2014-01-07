@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 public class Mho extends Actor {
 	Location loc;
 
@@ -40,113 +42,154 @@ public class Mho extends Actor {
 					mhoNextLoc = r;
 				}
 			}
-		}
-
-		//in the same youCol
-		if (youCol == mCol){
+		} else if (youCol == mCol) { //in the same youCol
 			// Mho is below you
 			if (youRow < mRow){
 				if (!getGrid().getActorName(u).equals("Mho")){
 					mhoNextLoc = u;
 				}
-			}
-			// Mho is above you
-			else{
+			} else { // Mho is above you
 				if (!getGrid().getActorName(d).equals("Mho")){
 					mhoNextLoc = d;
 				}
 			}
-		}
-
-		else {
+		} else {
 			//in the same diagonal
 			while (lookCounter < 2) {
 				if (Math.abs(youRow - mRow) == Math.abs(youCol - mCol)){
 					// mho is up and left
-					if((mRow < youRow) && (mCol < youCol)){
+					if ((mRow < youRow) && (mCol < youCol)) {
 						if (!getGrid().getActorName(dr).equals("Mho")){
-							if (getGrid().getActorName(dr).equals("Fence") && (lookCounter == 0)) {
-								lookCounter++;
+							if (getGrid().getActorName(dr).equals("Fence")) {
+								if (lookCounter == 0) {
+									lookCounter++;
+								} else {
+									mhoNextLoc = dr;
+									break;
+								}
 							} else {
 								mhoNextLoc = dr;
+								break;
 							}
 						}
 					}
 					// mho is down and left
 					if((mRow > youRow) && (mCol < youCol)){
 						if (!getGrid().getActorName(ur).equals("Mho")){
-							if (getGrid().getActorName(ur).equals("Fence") && (lookCounter == 0)) {
-								lookCounter++;
+							if (getGrid().getActorName(ur).equals("Fence")) {
+								if (lookCounter == 0) {
+									lookCounter++;
+								} else {
+									mhoNextLoc = ur;
+									break;
+								}
 							} else {
 								mhoNextLoc = ur;
+								break;
 							}
 						}
 					}
 					// mho is up and right
 					if ((mRow < youRow) && (mCol > youCol)){
 						if (!getGrid().getActorName(dl).equals("Mho")){
-							if (getGrid().getActorName(dl).equals("Fence") && (lookCounter == 0)) {
-								lookCounter++;
+							if (getGrid().getActorName(dl).equals("Fence")) {
+								if (lookCounter == 0) {
+									lookCounter++;
+								} else {
+									mhoNextLoc = dl;
+									break;
+								}
 							} else {
 								mhoNextLoc = dl;
+								break;
 							}
 						}
 					}
 					// mho is down and right
 					if ((mRow > youRow) && (mCol > youCol)){
 						if (!getGrid().getActorName(ul).equals("Mho")){
-							if (getGrid().getActorName(ul).equals("Fence") && (lookCounter == 0)) {
-								lookCounter++;
+							if (getGrid().getActorName(ul).equals("Fence")) {
+								if (lookCounter == 0) {
+									lookCounter++;
+								} else {
+									mhoNextLoc = ul;
+									break;
+								}
 							} else {
 								mhoNextLoc = ul;
+								break;
 							}
 						}
 					}
 
 				}
 				//horizontal is greater than vertical
-				if (Math.abs(youCol - mCol) > Math.abs(youRow - mRow)) {
+				else if (Math.abs(youCol - mCol) > Math.abs(youRow - mRow)) {
 					// Mho is to the right of you
 					if(mCol > youCol){
 						if (!getGrid().getActorName(l).equals("Mho")){
-							if (getGrid().getActorName(l).equals("Fence") && (lookCounter == 0)) {
-								lookCounter++;
+							if (getGrid().getActorName(l).equals("Fence")) {
+								if (lookCounter == 0) {
+									lookCounter++;
+								} else {
+									mhoNextLoc = l;
+									break;
+								}
 							} else {
 								mhoNextLoc = l;
+								break;
 							}
 						}
 					}
 					//Mho is to the left of you
-					if(mCol < youCol){
+					else {
 						if (!getGrid().getActorName(r).equals("Mho")){
-							if (getGrid().getActorName(r).equals("Fence") && (lookCounter == 0)) {
-								lookCounter++;
+							if (getGrid().getActorName(r).equals("Fence")) {
+								if (lookCounter == 0) {
+									lookCounter++;
+								} else {
+									mhoNextLoc = r;
+									break;
+								}
 							} else {
 								mhoNextLoc = r;
+								break;
 							}
 						}
 					}
 				}
 
 				//vertical is greater than horizontal
-				if (Math.abs(youCol - mCol) < Math.abs(youRow - mRow)){
+				else if (Math.abs(youCol - mCol) < Math.abs(youRow - mRow)){
 					// Mho is below you
-					if(mRow > youRow){
+					if (mRow > youRow){
 						if (!getGrid().getActorName(u).equals("Mho")) {
-							if (getGrid().getActorName(u).equals("Fence") && (lookCounter == 0)) {
-								lookCounter++;
+							if (getGrid().getActorName(u).equals("Fence")) {
+								if (lookCounter == 0) {
+									lookCounter++;
+								} else {
+									mhoNextLoc = u;
+									break;
+								}
 							} else {
 								mhoNextLoc = u;
+								break;
 							}
 						}
 					}
 					// Mho is above you
-					if(mRow < youRow){
+					else {
 						if (!getGrid().getActorName(d).equals("Mho")){
-							if (getGrid().getActorName(d).equals("Fence") && (lookCounter == 0)) {
-								lookCounter++;
+							if (getGrid().getActorName(d).equals("Fence")) {
+								if (lookCounter == 0) {
+									lookCounter++;
+								} else {
+									mhoNextLoc = d;
+									break;
+								}
 							} else {
 								mhoNextLoc = d;
+								break;
 							}
 						}
 					}
@@ -155,6 +198,7 @@ public class Mho extends Actor {
 			} 
 
 		}
+		lookCounter = 0;
 		return mhoNextLoc;
 
 	}
