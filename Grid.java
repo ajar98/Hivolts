@@ -181,4 +181,9 @@ public class Grid {
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, // anti aliasing
 				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
+	
+	public void nullLoc(Location loc) {
+		g.setColor(Color.black);
+		g.fillRect(pixelLoc(loc).getCol() + 1, pixelLoc(loc).getRow() + 1, getCellDim() - 1, getCellDim() - 1);
+	}
 } 
