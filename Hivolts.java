@@ -16,7 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 
-public class Hivolts extends JApplet implements KeyListener {
+public class Hivolts extends JApplet implements KeyListener, ActionListener {
 
 	Grid gr;
 	String size;
@@ -30,7 +30,6 @@ public class Hivolts extends JApplet implements KeyListener {
 	String mhoInput;
 	int mhoNum = 12;
 	AudioClip clip;
-	// ReplotButton r;
 
 	/**
 	 * Hivolts constructor
@@ -108,10 +107,11 @@ public class Hivolts extends JApplet implements KeyListener {
 	public void playHivolts(int width, int height, Graphics g) {
 		gr = new Grid(width, height, g, fencePlaces, mhoPlaces, youLoc, actorNames);
 		gr.drawGrid();
-		/* r = new ReplotButton();
-		r.setBounds(75, 550, 100, 36);
-		add(r);
-		r.setVisible(true); */ 
+		JButton replot = new JButton("Replot");
+		replot.addActionListener(this);
+		getContentPane().add(replot);
+		replot.setBounds((int) gr.getCellDim(), height - gr.getCellDim() * 2, gr.getCellDim() * 3, gr.getCellDim());
+		replot.setVisible(true);
 		if (mhoPlaces.isEmpty()) {
 			// clip.play();
 			int again = JOptionPane.showConfirmDialog(null, "You have won! Play again?");
@@ -128,6 +128,7 @@ public class Hivolts extends JApplet implements KeyListener {
 				System.exit(0);
 			} else {
 				init();
+				repaint();
 			}
 		}
 	}
@@ -197,16 +198,10 @@ public class Hivolts extends JApplet implements KeyListener {
 	}
  
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyReleased(KeyEvent arg0) { }
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyTyped(KeyEvent arg0) { }
 
 	/**
 	 * Uses global variables youLoc, fencePlaces, and mhoPlaces so all of Hivolts.java can use them and pass them easily
@@ -334,19 +329,19 @@ public class Hivolts extends JApplet implements KeyListener {
 		appletPrint("The object of the game is to kill the moving mhos by causing them to fall on electric fences.");
 		appletPrint("However, if a mho moves onto you or you move onto a fence or mho, you lose!");
 		appletPrint("Controls:\nQ - Move up and to the left\nW - Move up\nE - up and to the right\nD - to the right\nC - down and to the right\nX - down\nZ - down and to the left\nA - to the left\nS - don't move\nJ - jump to a random square that isn't a fence.");
+		appletPrint("If you ever want to start again, hit the replot button!");
 		JOptionPane.showConfirmDialog(null, "Ready to play?");
 	}
-	       
-	/* private class ReplotButton extends JButton implements ActionListener {
-		ReplotButton() {
-			super("REPLOT");
-			addActionListener(this);
-		}
 
-		public void actionPerformed(ActionEvent arg0) {
-			Hivolts h = new Hivolts();
-		}
-	} */
+	/**
+	 * Repaints the entire grid with new locations and new numbers for fences and mhos
+	 */
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		init();
+		repaint();
+	}
 	
 }
 
